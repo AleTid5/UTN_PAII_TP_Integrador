@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">TP_Cuatrimestral</string>
+    <string name="title_activity_system">System</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Gente en Situación de Calle</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_login">Login</string>
+
+    <string name="menu_alerts">Alertas</string>
+    <string name="menu_consult_contacts">Consultar contactos</string>
+    <string name="menu_consult_guides">Consultar guías</string>
+    <string name="menu_dashboard">Dashboard</string>
+    <string name="menu_manage_history">Administrar historial</string>
+    <string name="menu_setup_account">Configurar cuenta</string>
 </resources>

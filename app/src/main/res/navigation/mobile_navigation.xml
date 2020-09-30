@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_dashboard">
+
+    <fragment
+        android:id="@+id/nav_dashboard"
+        android:name="src.Activities.ui.dashboard.DashboardFragment"
+        android:label="@string/menu_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/nav_consult_guides"
+        android:name="src.Activities.ui.consult_guides.ConsultGuidesFragment"
+        android:label="@string/menu_consult_guides"
+        tools:layout="@layout/fragment_consult_guides" />
+
+    <fragment
+        android:id="@+id/nav_consult_contacts"
+        android:name="src.Activities.ui.consult_contacts.ConsultContactsFragment"
+        android:label="@string/menu_consult_contacts"
+        tools:layout="@layout/fragment_consult_contacts" />
+
+    <fragment
+        android:id="@+id/nav_manage_history"
+        android:name="src.Activities.ui.manage_history.ManageHistoryFragment"
+        android:label="@string/menu_manage_history"
+        tools:layout="@layout/fragment_manage_history" />
+
+    <fragment
+        android:id="@+id/nav_alerts"
+        android:name="src.Activities.ui.alerts.AlertsFragment"
+        android:label="@string/menu_alerts"
+        tools:layout="@layout/fragment_alerts" />
+
+    <fragment
+        android:id="@+id/nav_setup_account"
+        android:name="src.Activities.ui.setup_account.SetupAccountFragment"
+        android:label="@string/menu_setup_account"
+        tools:layout="@layout/fragment_setup_account" />
+</navigation>
