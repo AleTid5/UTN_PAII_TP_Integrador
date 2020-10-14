@@ -17,4 +17,5 @@ This is an App made for every citizen interested in helping people in street sit
 # 🖥 Development Installation
 - Clone the project
 - Open it in Android Studio
-- Run/Debug the app
+- Install the dependencies
+- Run / Debug the app
