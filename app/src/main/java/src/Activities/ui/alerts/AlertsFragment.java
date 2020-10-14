@@ -22,14 +22,12 @@ public class AlertsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         alertsViewModel =
                 ViewModelProviders.of(this).get(AlertsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_alerts, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        alertsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        View root = inflater.inflate(R.layout.fragment_main_layout, container, false);
+
+        final TextView textView = root.findViewById(R.id.main_title);
+
+        alertsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
         return root;
     }
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.tp_cuatrimestral.R;
 import com.riyagayasen.easyaccordion.AccordionView;
+
+import src.Activities.Adapters.ConsultContactsAdapter;
 
 public class ConsultContactsFragment extends Fragment {
 
@@ -32,7 +35,10 @@ public class ConsultContactsFragment extends Fragment {
         View content = getLayoutInflater().inflate(R.layout.fragment_consult_contacts, mainContent, false);
         mainContent.addView(content);
 
-        AccordionView accordionView = new AccordionView(root.getContext());
+        consultContactsViewModel.getContactList().observe(getViewLifecycleOwner(), contactList -> {
+            GridView gridView = requireView().findViewById(R.id.grid_product_view);
+            gridView.setAdapter(new ConsultContactsAdapter(consultContactsViewModel, contactList));
+        });
 
         return root;
     }

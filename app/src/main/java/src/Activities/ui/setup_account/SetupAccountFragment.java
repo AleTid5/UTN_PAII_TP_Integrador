@@ -22,14 +22,12 @@ public class SetupAccountFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         setupAccountViewModel =
                 ViewModelProviders.of(this).get(SetupAccountViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_setup_account, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        setupAccountViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        View root = inflater.inflate(R.layout.fragment_main_layout, container, false);
+
+        final TextView textView = root.findViewById(R.id.main_title);
+
+        setupAccountViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
         return root;
     }
 }

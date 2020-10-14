@@ -22,14 +22,12 @@ public class ManageHistoryFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         manageHistoryViewModel =
                 ViewModelProviders.of(this).get(ManageHistoryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_manage_history, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        manageHistoryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        View root = inflater.inflate(R.layout.fragment_main_layout, container, false);
+
+        final TextView textView = root.findViewById(R.id.main_title);
+
+        manageHistoryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
         return root;
     }
 }
