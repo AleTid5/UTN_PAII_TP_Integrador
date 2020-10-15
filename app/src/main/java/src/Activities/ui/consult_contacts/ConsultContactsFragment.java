@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.tp_cuatrimestral.R;
-import com.riyagayasen.easyaccordion.AccordionView;
 
 import src.Activities.Adapters.ConsultContactsAdapter;
 

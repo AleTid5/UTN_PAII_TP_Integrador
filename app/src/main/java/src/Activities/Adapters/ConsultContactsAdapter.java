@@ -9,12 +9,15 @@ import com.example.tp_cuatrimestral.R;
 
 import java.util.List;
 
+import components.Accordion.AccordionExpansionCollapseListener;
+import components.Accordion.AccordionView;
 import src.Activities.ui.consult_contacts.ConsultContactsViewModel;
 import src.Models.Contact;
 
 public class ConsultContactsAdapter extends BaseAdapter {
     private ConsultContactsViewModel consultContactsViewModel;
     private List<Contact> elements;
+    private static AccordionView accordionView;
 
     public ConsultContactsAdapter(ConsultContactsViewModel consultContactsViewModel, List<Contact> elements) {
         this.elements = elements;
@@ -45,7 +48,34 @@ public class ConsultContactsAdapter extends BaseAdapter {
             newView = inflater.inflate(R.layout.adapter_consult_contacts,null);
         }
 
+        Contact contact = getItem(i);
 
+        AccordionView accordionView = newView.findViewById(R.id.accordion_view);
+
+        if (accordionView == null) {
+            return newView;
+        }
+
+        accordionView.setHeadingString(contact.getName());
+        accordionView.setId(i);
+
+        accordionView.setOnExpandCollapseListener(new AccordionExpansionCollapseListener() {
+            @Override
+            public void onExpanded(AccordionView newAccordionView) {
+                if (ConsultContactsAdapter.accordionView == null) {
+                    ConsultContactsAdapter.accordionView = newAccordionView;
+                    return;
+                }
+
+                if (ConsultContactsAdapter.accordionView.getId() != newAccordionView.getId()) {
+                    ConsultContactsAdapter.accordionView.collapse();
+                    ConsultContactsAdapter.accordionView = newAccordionView;
+                }
+            }
+
+            @Override
+            public void onCollapsed(AccordionView view) {}
+        });
 
         return newView;
     }

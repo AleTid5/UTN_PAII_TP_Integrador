@@ -5,38 +5,63 @@
     android:layout_height="match_parent"
     tools:context="src.Activities.ui.consult_contacts.ConsultContactsFragment">
 
-    <FrameLayout
+    <components.Accordion.AccordionView
+        android:id="@+id/accordion_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.riyagayasen.easyaccordion.AccordionView
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        app:heading="@string/app_name"
+        app:isAnimated="false"
+        app:isExpanded="false"
+        app:isPartitioned="true">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:visibility="visible"
-            app:isAnimated="false"
-            app:heading="This is a demo accordion"
-            app:isExpanded="true"
-            app:isPartitioned="true">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="75dp"
+                    android:minHeight="75dp"
+                    android:src="@android:drawable/ic_dialog_map" />
+
+                <TextView
+                    android:id="@+id/textPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:autoLink="phone"
+                    android:text="@string/app_name" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/textAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Demo accordion text" />
+                android:layout_marginTop="10dp"
+                android:text="@string/action_settings" />
 
-            <Button
+            <TextView
+                android:id="@+id/textEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Test Button"
-                android:id="@+id/button_2"
-                android:layout_below="@+id/textView" />
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Test Button 2"
-                android:layout_below="@+id/button_2" />
+                android:layout_marginTop="10dp"
+                android:autoLink="email"
+                android:text="@string/menu_alerts" />
+
+        </LinearLayout>
 
 
-        </com.riyagayasen.easyaccordion.AccordionView>
-    </FrameLayout>
+    </components.Accordion.AccordionView>
 </androidx.constraintlayout.widget.ConstraintLayout>
