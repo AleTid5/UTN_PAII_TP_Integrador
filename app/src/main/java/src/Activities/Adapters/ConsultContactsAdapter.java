@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.example.tp_cuatrimestral.R;
 
@@ -48,16 +49,20 @@ public class ConsultContactsAdapter extends BaseAdapter {
             newView = inflater.inflate(R.layout.adapter_consult_contacts,null);
         }
 
-        Contact contact = getItem(i);
-
         AccordionView accordionView = newView.findViewById(R.id.accordion_view);
 
         if (accordionView == null) {
             return newView;
         }
 
+        Contact contact = getItem(i);
+
         accordionView.setHeadingString(contact.getName());
         accordionView.setId(i);
+
+        ((TextView) accordionView.findViewById(R.id.textPhone)).setText(contact.getPhones().get(0).getPhoneNumber());
+        ((TextView) accordionView.findViewById(R.id.textAddress)).setText(contact.getAddress());
+        ((TextView) accordionView.findViewById(R.id.textEmail)).setText(contact.getEmail());
 
         accordionView.setOnExpandCollapseListener(new AccordionExpansionCollapseListener() {
             @Override
