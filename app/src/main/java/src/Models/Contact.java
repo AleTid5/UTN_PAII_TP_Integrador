@@ -10,6 +10,8 @@ public class Contact {
     private String address;
     private List<Phone> phones;
 
+    public Contact() {}
+
     public Contact(Integer id, String name, String information, String email, String address, List<Phone> phones) {
         this.id = id;
         this.name = name;
@@ -23,47 +25,59 @@ public class Contact {
         return id;
     }
 
-    public void setId(Integer id) {
+    public Contact setId(Integer id) {
         this.id = id;
+
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Contact setName(String name) {
         this.name = name;
+
+        return this;
     }
 
     public String getInformation() {
         return information;
     }
 
-    public void setInformation(String information) {
+    public Contact setInformation(String information) {
         this.information = information;
+
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public Contact setEmail(String email) {
         this.email = email;
+
+        return this;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public Contact setAddress(String address) {
         this.address = address;
+
+        return this;
     }
 
     public List<Phone> getPhones() {
         return phones;
     }
 
-    public void setPhones(List<Phone> phones) {
+    public Contact setPhones(List<Phone> phones) {
         this.phones = phones;
+
+        return this;
     }
 }
