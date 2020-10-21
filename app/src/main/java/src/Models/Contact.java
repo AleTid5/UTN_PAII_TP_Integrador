@@ -1,5 +1,6 @@
 package src.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Contact {
@@ -8,7 +9,7 @@ public class Contact {
     private String information;
     private String email;
     private String address;
-    private List<Phone> phones;
+    private List<Phone> phones = new ArrayList<>();
 
     public Contact() {}
 
@@ -77,6 +78,12 @@ public class Contact {
 
     public Contact setPhones(List<Phone> phones) {
         this.phones = phones;
+
+        return this;
+    }
+
+    public Contact addPhone(Phone phone) {
+        this.phones.add(phone);
 
         return this;
     }
