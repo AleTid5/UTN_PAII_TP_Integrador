@@ -28,6 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onRecoveryPassword(View view) {
-        startActivity(new Intent(this, SystemActivity.class));
+        startActivity(new Intent(this, RecoveryPasswordActivity.class));
     }
 }
