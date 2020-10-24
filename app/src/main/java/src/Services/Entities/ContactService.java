@@ -14,7 +14,7 @@ import src.Models.Phone;
 
 public abstract class ContactService {
     public static List<Contact> findContacts() {
-        List<Contact> parkingList = new LinkedList<>(); // Linked list is faster when adding and deleting objects
+        List<Contact> contactList = new LinkedList<>(); // Linked list is faster when adding and deleting objects
 
         Cursor cursor = new DatabaseManager().find(String.format(
                 "SELECT * FROM %s",
@@ -51,10 +51,10 @@ public abstract class ContactService {
                     } while (cursor2.moveToNext());
                 }
 
-                parkingList.add(contact);
+                contactList.add(contact);
             } while (cursor.moveToNext());
         }
 
-        return parkingList;
+        return contactList;
     }
 }
