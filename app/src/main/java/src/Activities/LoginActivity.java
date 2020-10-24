@@ -10,13 +10,13 @@ import com.example.tp_cuatrimestral.R;
 
 import src.Services.ContextManagerService;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ContextManagerService.setContext(this.getBaseContext());
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
     }
 
     public void onLogin(View view) {
