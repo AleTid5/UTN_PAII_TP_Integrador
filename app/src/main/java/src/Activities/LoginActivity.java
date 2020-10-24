@@ -22,4 +22,12 @@ public class LoginActivity extends AppCompatActivity {
     public void onLogin(View view) {
         startActivity(new Intent(this, SystemActivity.class));
     }
+
+    public void onRegister(View view) {
+        startActivity(new Intent(this, RegisterActivity.class));
+    }
+
+    public void onRecoveryPassword(View view) {
+        startActivity(new Intent(this, SystemActivity.class));
+    }
 }

@@ -67,6 +67,7 @@
                 android:id="@+id/link_forgot_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="onRecoveryPassword"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:text="¿Olvidaste tu contraseña?"
@@ -78,6 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#D81B60"
+                android:onClick="onLogin"
                 android:text="Iniciar sesión"
                 android:textColor="#FFFFFF" />
 
@@ -86,6 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:onClick="onRegister"
                 android:paddingTop="10dp"
                 android:text="REGISTRARME"
                 android:textColor="#D81B60"
