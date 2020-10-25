@@ -4,16 +4,21 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.List;
+
+import src.Models.History;
+import src.Services.Entities.HistoryService;
+
 public class ManageHistoryViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+
+    private static MutableLiveData<List<History>> liveHistoryList = new MutableLiveData<>();
 
     public ManageHistoryViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is history manager fragment");
+        liveHistoryList.setValue(HistoryService.getHistoryList());
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<History>> getHistoryList() {
+        return liveHistoryList;
     }
 }
