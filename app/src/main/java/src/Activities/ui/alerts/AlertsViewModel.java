@@ -4,16 +4,23 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.List;
+
+import src.Models.Alert;
+import src.Models.History;
+import src.Services.Entities.AlertService;
+import src.Services.Entities.HistoryService;
+
 public class AlertsViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private static MutableLiveData<List<Alert>> liveAlertList = new MutableLiveData<>();
 
     public AlertsViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is alerts fragment");
+        liveAlertList.setValue(AlertService.getAlertList());
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<Alert>> getAlertList() {
+        return liveAlertList;
     }
+
 }

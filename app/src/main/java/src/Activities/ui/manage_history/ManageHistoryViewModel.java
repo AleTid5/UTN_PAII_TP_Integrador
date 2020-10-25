@@ -11,7 +11,6 @@ import src.Services.Entities.HistoryService;
 
 public class ManageHistoryViewModel extends ViewModel {
 
-
     private static MutableLiveData<List<History>> liveHistoryList = new MutableLiveData<>();
 
     public ManageHistoryViewModel() {
