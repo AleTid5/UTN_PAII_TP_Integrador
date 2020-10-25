@@ -4,16 +4,20 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.List;
+
+import src.Models.Step;
+import src.Services.Entities.GuideService;
+
 public class ConsultGuidesViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private static MutableLiveData<List<Step>> liveStepList = new MutableLiveData<>();
 
     public ConsultGuidesViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is guides fragment");
+        liveStepList.setValue(GuideService.getSteps());
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<Step>> getStepList() {
+        return liveStepList;
     }
 }

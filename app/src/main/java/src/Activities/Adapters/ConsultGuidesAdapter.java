@@ -12,13 +12,13 @@ import java.util.List;
 
 import components.Accordion.AccordionExpansionCollapseListener;
 import components.Accordion.AccordionView;
-import src.Models.Contact;
+import src.Models.Step;
 
-public class ConsultContactsAdapter extends BaseAdapter {
-    private List<Contact> elements;
+public class ConsultGuidesAdapter extends BaseAdapter {
+    private List<Step> elements;
     private static AccordionView accordionView;
 
-    public ConsultContactsAdapter(List<Contact> elements) {
+    public ConsultGuidesAdapter(List<Step> elements) {
         this.elements = elements;
     }
 
@@ -28,7 +28,7 @@ public class ConsultContactsAdapter extends BaseAdapter {
     }
 
     @Override
-    public Contact getItem(int i) {
+    public Step getItem(int i) {
         return elements.get(i);
     }
 
@@ -43,7 +43,7 @@ public class ConsultContactsAdapter extends BaseAdapter {
         View newView = view;
 
         if (newView == null){
-            newView = inflater.inflate(R.layout.adapter_consult_contacts,null);
+            newView = inflater.inflate(R.layout.adapter_consult_guides,null);
         }
 
         AccordionView accordionView = newView.findViewById(R.id.accordion_view);
@@ -52,26 +52,24 @@ public class ConsultContactsAdapter extends BaseAdapter {
             return newView;
         }
 
-        Contact contact = getItem(i);
+        Step step = getItem(i);
 
-        accordionView.setHeadingString(contact.getName());
+        accordionView.setHeadingString(step.getName());
         accordionView.setId(i);
 
-        ((TextView) accordionView.findViewById(R.id.textPhone)).setText(contact.getPhones().get(0).getPhoneNumber());
-        ((TextView) accordionView.findViewById(R.id.textAddress)).setText(contact.getAddress());
-        ((TextView) accordionView.findViewById(R.id.textEmail)).setText(contact.getEmail());
+        ((TextView) accordionView.findViewById(R.id.textDescription)).setText(step.getDescription());
 
         accordionView.setOnExpandCollapseListener(new AccordionExpansionCollapseListener() {
             @Override
             public void onExpanded(AccordionView newAccordionView) {
-                if (ConsultContactsAdapter.accordionView == null) {
-                    ConsultContactsAdapter.accordionView = newAccordionView;
+                if (ConsultGuidesAdapter.accordionView == null) {
+                    ConsultGuidesAdapter.accordionView = newAccordionView;
                     return;
                 }
 
-                if (ConsultContactsAdapter.accordionView.getId() != newAccordionView.getId()) {
-                    ConsultContactsAdapter.accordionView.collapse();
-                    ConsultContactsAdapter.accordionView = newAccordionView;
+                if (ConsultGuidesAdapter.accordionView.getId() != newAccordionView.getId()) {
+                    ConsultGuidesAdapter.accordionView.collapse();
+                    ConsultGuidesAdapter.accordionView = newAccordionView;
                 }
             }
 

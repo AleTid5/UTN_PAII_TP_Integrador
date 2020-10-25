@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.tp_cuatrimestral.R;
@@ -22,21 +23,18 @@ public class ConsultContactsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        consultContactsViewModel =
-                ViewModelProviders.of(this).get(ConsultContactsViewModel.class);
+        consultContactsViewModel = new ViewModelProvider(this).get(ConsultContactsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_main_layout, container, false);
 
-        final TextView textView = root.findViewById(R.id.main_title);
-
-        consultContactsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        ((TextView) root.findViewById(R.id.main_title)).setText("Consultar contactos");
 
         FrameLayout mainContent = root.findViewById(R.id.main_content);
         View content = getLayoutInflater().inflate(R.layout.fragment_consult_contacts, mainContent, false);
         mainContent.addView(content);
 
         consultContactsViewModel.getContactList().observe(getViewLifecycleOwner(), contactList -> {
-            GridView gridView = requireView().findViewById(R.id.grid_product_view);
-            gridView.setAdapter(new ConsultContactsAdapter(consultContactsViewModel, contactList));
+            GridView gridView = requireView().findViewById(R.id.grid_view);
+            gridView.setAdapter(new ConsultContactsAdapter(contactList));
         });
 
         return root;

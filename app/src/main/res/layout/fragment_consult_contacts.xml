@@ -6,7 +6,7 @@
     tools:context="src.Activities.ui.consult_contacts.ConsultContactsFragment">
 
     <GridView
-        android:id="@+id/grid_product_view"
+        android:id="@+id/grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:numColumns="1"

@@ -7,10 +7,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.tp_cuatrimestral.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DashboardFragment extends Fragment {
 
@@ -18,8 +21,7 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);
+        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_main_layout, container, false);
 
         final TextView textView = root.findViewById(R.id.main_title);
