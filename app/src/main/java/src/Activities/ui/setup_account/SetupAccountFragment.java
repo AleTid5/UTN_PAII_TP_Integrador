@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,9 +22,11 @@ public class SetupAccountFragment extends Fragment {
         setupAccountViewModel = new ViewModelProvider(this).get(SetupAccountViewModel.class);
         View root = inflater.inflate(R.layout.fragment_main_layout, container, false);
 
-        final TextView textView = root.findViewById(R.id.main_title);
+        ((TextView) root.findViewById(R.id.main_title)).setText("Configuración de cuenta");
 
-        setupAccountViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        FrameLayout mainContent = root.findViewById(R.id.main_content);
+        View content = getLayoutInflater().inflate(R.layout.fragment_setup_account, mainContent, false);
+        mainContent.addView(content);
 
         return root;
     }
