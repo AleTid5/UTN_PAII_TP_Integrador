@@ -40,7 +40,7 @@ public class ConsultGuidesFragment extends Fragment {
         });
 
         ((FloatingActionButton) root.findViewById(R.id.button_frequent_questions)).setOnClickListener(
-                (View.OnClickListener) view -> {
+                view -> {
                     mainContent.removeView(content);
                     requireActivity().getSupportFragmentManager()
                             .beginTransaction()
