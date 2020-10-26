@@ -12,7 +12,6 @@ import com.example.tp_cuatrimestral.R;
 import java.util.List;
 
 import src.Models.Alert;
-import src.Models.History;
 
 public class AlertsAdapter extends BaseAdapter {
     private List<Alert> elements;

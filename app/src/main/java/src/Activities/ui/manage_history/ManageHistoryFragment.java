@@ -11,11 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.tp_cuatrimestral.R;
 
-import src.Activities.Adapters.ConsultGuidesAdapter;
 import src.Activities.Adapters.ManageHistoryAdapter;
 
 public class ManageHistoryFragment extends Fragment {

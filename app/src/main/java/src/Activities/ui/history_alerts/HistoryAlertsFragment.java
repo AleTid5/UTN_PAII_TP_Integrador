@@ -1,25 +1,19 @@
 package src.Activities.ui.history_alerts;
 
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.GridView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.GridView;
-import android.widget.TextView;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tp_cuatrimestral.R;
 
 import src.Activities.Adapters.AlertsAdapter;
-import src.Activities.ui.alerts.AlertsViewModel;
 
 public class HistoryAlertsFragment extends Fragment {
 

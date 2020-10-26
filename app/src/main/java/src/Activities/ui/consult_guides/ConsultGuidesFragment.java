@@ -9,16 +9,14 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tp_cuatrimestral.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Objects;
-
 import src.Activities.Adapters.ConsultGuidesAdapter;
+import src.Activities.ui.frequent_questions.FrequentQuestionsFragment;
 
 public class ConsultGuidesFragment extends Fragment {
 
@@ -40,6 +38,18 @@ public class ConsultGuidesFragment extends Fragment {
             GridView gridView = requireView().findViewById(R.id.grid_view);
             gridView.setAdapter(new ConsultGuidesAdapter(stepList));
         });
+
+        ((FloatingActionButton) root.findViewById(R.id.button_frequent_questions)).setOnClickListener(
+                (View.OnClickListener) view -> {
+                    mainContent.removeView(content);
+                    requireActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_content, FrequentQuestionsFragment.newInstance(), "findThisFragment")
+                            .addToBackStack(null)
+                            .commit();
+                    ((TextView) root.findViewById(R.id.main_title)).setText("Preguntas frecuentes");
+                }
+        );
 
         return root;
     }

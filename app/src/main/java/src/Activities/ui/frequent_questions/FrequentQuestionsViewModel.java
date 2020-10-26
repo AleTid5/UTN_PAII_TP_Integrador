@@ -1,4 +1,4 @@
-package src.Activities.ui.consult_guides;
+package src.Activities.ui.frequent_questions;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -7,14 +7,13 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import src.Models.Step;
-import src.Services.Statics.GuideService;
+import src.Services.Statics.FrequentQuestionsService;
 
-public class ConsultGuidesViewModel extends ViewModel {
-
+public class FrequentQuestionsViewModel extends ViewModel {
     private static MutableLiveData<List<Step>> liveStepList = new MutableLiveData<>();
 
-    public ConsultGuidesViewModel() {
-        liveStepList.setValue(GuideService.getSteps());
+    public FrequentQuestionsViewModel() {
+        liveStepList.setValue(FrequentQuestionsService.getSteps());
     }
 
     public LiveData<List<Step>> getStepList() {

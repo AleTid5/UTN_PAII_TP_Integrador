@@ -1,4 +1,4 @@
-package src.Services.Entities;
+package src.Services.Statics;
 
 import java.util.Arrays;
 import java.util.List;

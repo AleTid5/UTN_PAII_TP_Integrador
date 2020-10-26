@@ -5,22 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.tp_cuatrimestral.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.util.Objects;
-
-import src.Activities.Adapters.AlertsAdapter;
-import src.Activities.Adapters.ManageHistoryAdapter;
 import src.Activities.ui.history_alerts.HistoryAlertsFragment;
 
 public class AlertsFragment extends Fragment {

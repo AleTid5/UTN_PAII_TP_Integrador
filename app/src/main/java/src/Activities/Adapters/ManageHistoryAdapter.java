@@ -11,10 +11,7 @@ import com.example.tp_cuatrimestral.R;
 
 import java.util.List;
 
-import components.Accordion.AccordionExpansionCollapseListener;
-import components.Accordion.AccordionView;
 import src.Models.History;
-import src.Models.Step;
 
 public class ManageHistoryAdapter extends BaseAdapter {
     private List<History> elements;
