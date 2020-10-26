@@ -3,27 +3,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="src.Activities.ui.consult_guides.ConsultGuidesFragment">
+    tools:context="src.Activities.ui.alerts.AlertsFragment">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_frequent_questions"
+    <TextView
+        android:id="@+id/link_my_alerts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:src="@android:drawable/ic_menu_info_details"
+        android:drawableTint="#D81B60"
+        android:gravity="center_vertical"
+        android:text="Mis alertas"
+        android:textColor="#D81B60"
+        app:layout_constraintBottom_toTopOf="@+id/grid_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/link_other_alerts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTint="#D81B60"
+        android:gravity="center_vertical"
+        android:text="Otras alertas"
+        android:textColor="#D81B60"
         app:layout_constraintBottom_toTopOf="@+id/grid_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:maxImageSize="44dp" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <GridView
         android:id="@+id/grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="40dp"
         android:horizontalSpacing="10dp"
         android:numColumns="1"
         android:verticalSpacing="10dp"

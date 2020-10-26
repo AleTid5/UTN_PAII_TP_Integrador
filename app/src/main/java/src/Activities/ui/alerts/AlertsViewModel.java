@@ -13,14 +13,7 @@ import src.Services.Entities.HistoryService;
 
 public class AlertsViewModel extends ViewModel {
 
-    private static MutableLiveData<List<Alert>> liveAlertList = new MutableLiveData<>();
-
     public AlertsViewModel() {
-        liveAlertList.setValue(AlertService.getAlertList());
-    }
-
-    public LiveData<List<Alert>> getAlertList() {
-        return liveAlertList;
     }
 
 }

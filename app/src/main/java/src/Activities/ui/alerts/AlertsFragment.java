@@ -14,9 +14,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.tp_cuatrimestral.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Objects;
 
 import src.Activities.Adapters.AlertsAdapter;
 import src.Activities.Adapters.ManageHistoryAdapter;
+import src.Activities.ui.history_alerts.HistoryAlertsFragment;
 
 public class AlertsFragment extends Fragment {
 
@@ -27,16 +32,23 @@ public class AlertsFragment extends Fragment {
         alertsViewModel = new ViewModelProvider(this).get(AlertsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_main_layout, container, false);
 
-        ((TextView) root.findViewById(R.id.main_title)).setText("Historial de alertas");
+        ((TextView) root.findViewById(R.id.main_title)).setText("Generar alerta");
 
         FrameLayout mainContent = root.findViewById(R.id.main_content);
         View content = getLayoutInflater().inflate(R.layout.fragment_alerts, mainContent, false);
         mainContent.addView(content);
 
-        alertsViewModel.getAlertList().observe(getViewLifecycleOwner(), alertList -> {
-            GridView gridView = requireView().findViewById(R.id.grid_view);
-            gridView.setAdapter(new AlertsAdapter(alertList));
-        });
+        ((FloatingActionButton) root.findViewById(R.id.button_view_history)).setOnClickListener(
+                (View.OnClickListener) view -> {
+                    mainContent.removeView(content);
+                    requireActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_content, HistoryAlertsFragment.newInstance(), "findThisFragment")
+                            .addToBackStack(null)
+                            .commit();
+                    ((TextView) root.findViewById(R.id.main_title)).setText("Historial de alertas");
+                }
+        );
 
         return root;
     }

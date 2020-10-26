@@ -5,49 +5,116 @@
     android:layout_height="match_parent"
     tools:context="src.Activities.ui.alerts.AlertsFragment">
 
-    <TextView
-        android:id="@+id/link_my_alerts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableTint="#D81B60"
-        android:gravity="center_vertical"
-        android:text="Mis alertas"
-        android:textColor="#D81B60"
-        app:layout_constraintBottom_toTopOf="@+id/grid_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/link_other_alerts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableTint="#D81B60"
-        android:gravity="center_vertical"
-        android:text="Otras alertas"
-        android:textColor="#D81B60"
-        app:layout_constraintBottom_toTopOf="@+id/grid_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <GridView
-        android:id="@+id/grid_view"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp"
-        android:horizontalSpacing="10dp"
-        android:numColumns="1"
-        android:verticalSpacing="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
 
-    </GridView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Agregue una foto del lugar"
+                    android:textColor="#D81B60"
+                    android:textSize="18dp" />
+
+                <Button
+                    android:id="@+id/button_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#D81B60"
+                    android:text="Agregar imagen"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_view_history"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="onViewHistory"
+                android:src="@android:drawable/ic_menu_view"
+                app:maxImageSize="36dp" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/input_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Nombre y apellido"
+            android:inputType="textPersonName"
+            android:textColor="#D81B60"
+            android:textColorHint="#D81B60" />
+
+        <EditText
+            android:id="@+id/input_place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Lugar de encuentro"
+            android:inputType="textPersonName"
+            android:textColor="#D81B60"
+            android:textColorHint="#D81B60" />
+
+        <EditText
+            android:id="@+id/input_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Contacto (Mail o Teléfono)"
+            android:inputType="textPersonName"
+            android:textColor="#D81B60"
+            android:textColorHint="#D81B60" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Observaciones"
+            android:textColor="#D81B60"
+            android:textSize="18dp" />
+
+        <EditText
+            android:id="@+id/input_observations"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="#CDCDCD"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#D81B60"
+            android:text="Guardar"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
