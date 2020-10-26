@@ -10,12 +10,8 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
 import com.example.tp_cuatrimestral.R;
-
-import src.Activities.Adapters.AlertsAdapter;
-import src.Activities.ui.history_alerts.HistoryAlertsViewModel;
 
 public class HistoryFormFragment extends Fragment {
 

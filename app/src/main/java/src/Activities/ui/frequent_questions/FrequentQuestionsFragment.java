@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tp_cuatrimestral.R;
 
-import src.Activities.Adapters.ConsultGuidesAdapter;
+import src.Activities.Adapters.ConsultGuideAdapter;
 
 public class FrequentQuestionsFragment extends Fragment {
 
@@ -32,7 +32,7 @@ public class FrequentQuestionsFragment extends Fragment {
 
         frequentQuestionsViewModel.getStepList().observe(getViewLifecycleOwner(), stepList -> {
             GridView gridView = requireView().findViewById(R.id.grid_view);
-            gridView.setAdapter(new ConsultGuidesAdapter(stepList));
+            gridView.setAdapter(new ConsultGuideAdapter(stepList));
         });
 
         return root;

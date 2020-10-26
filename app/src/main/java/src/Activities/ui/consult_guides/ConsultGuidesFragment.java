@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.tp_cuatrimestral.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import src.Activities.Adapters.ConsultGuidesAdapter;
+import src.Activities.Adapters.ConsultGuideAdapter;
 import src.Activities.ui.frequent_questions.FrequentQuestionsFragment;
 
 public class ConsultGuidesFragment extends Fragment {
@@ -36,7 +36,7 @@ public class ConsultGuidesFragment extends Fragment {
 
         consultGuidesViewModel.getStepList().observe(getViewLifecycleOwner(), stepList -> {
             GridView gridView = requireView().findViewById(R.id.grid_view);
-            gridView.setAdapter(new ConsultGuidesAdapter(stepList));
+            gridView.setAdapter(new ConsultGuideAdapter(stepList));
         });
 
         ((FloatingActionButton) root.findViewById(R.id.button_frequent_questions)).setOnClickListener(

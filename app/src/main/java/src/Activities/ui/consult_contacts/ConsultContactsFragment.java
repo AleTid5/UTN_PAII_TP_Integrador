@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tp_cuatrimestral.R;
 
-import src.Activities.Adapters.ConsultContactsAdapter;
+import src.Activities.Adapters.ConsultContactAdapter;
 
 public class ConsultContactsFragment extends Fragment {
 
@@ -33,7 +33,7 @@ public class ConsultContactsFragment extends Fragment {
 
         consultContactsViewModel.getContactList().observe(getViewLifecycleOwner(), contactList -> {
             GridView gridView = requireView().findViewById(R.id.grid_view);
-            gridView.setAdapter(new ConsultContactsAdapter(contactList));
+            gridView.setAdapter(new ConsultContactAdapter(contactList));
         });
 
         return root;

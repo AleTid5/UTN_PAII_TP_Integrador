@@ -1,6 +1,5 @@
 package src.Activities.Adapters;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,17 @@ import com.example.tp_cuatrimestral.R;
 
 import java.util.List;
 
-import src.Models.Alert;
+import components.Accordion.AccordionExpansionCollapseListener;
+import components.Accordion.AccordionView;
+import src.Models.History;
+import src.Models.Step;
+import src.Models.User;
 
-public class AlertsAdapter extends BaseAdapter {
-    private List<Alert> elements;
+public class BlockedUserAdapter extends BaseAdapter {
+    private List<User> elements;
+    private static AccordionView accordionView;
 
-    public AlertsAdapter(List<Alert> elements) {
+    public BlockedUserAdapter(List<User> elements) {
         this.elements = elements;
     }
 
@@ -26,7 +30,7 @@ public class AlertsAdapter extends BaseAdapter {
     }
 
     @Override
-    public Alert getItem(int i) {
+    public User getItem(int i) {
         return elements.get(i);
     }
 
@@ -35,19 +39,18 @@ public class AlertsAdapter extends BaseAdapter {
         return i;
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View newView = view;
 
         if (newView == null){
-            newView = inflater.inflate(R.layout.adapter_alerts,null);
+            newView = inflater.inflate(R.layout.adapter_blocked_user,null);
         }
 
-        Alert step = getItem(i);
+        User step = getItem(i);
 
-        ((TextView) newView.findViewById(R.id.text_name)).setText("Alerta " + (i + 1));
+        ((TextView) newView.findViewById(R.id.text_name)).setText("Usuario " + (i + 1));
 
         return newView;
     }

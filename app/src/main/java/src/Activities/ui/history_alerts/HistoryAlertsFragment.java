@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tp_cuatrimestral.R;
 
-import src.Activities.Adapters.AlertsAdapter;
+import src.Activities.Adapters.AlertAdapter;
 
 public class HistoryAlertsFragment extends Fragment {
 
@@ -31,7 +31,7 @@ public class HistoryAlertsFragment extends Fragment {
 
         historyAlertsViewModel.getAlertList().observe(getViewLifecycleOwner(), alertList -> {
             GridView gridView = requireView().findViewById(R.id.grid_view);
-            gridView.setAdapter(new AlertsAdapter(alertList));
+            gridView.setAdapter(new AlertAdapter(alertList));
         });
 
         return root;

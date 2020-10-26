@@ -14,11 +14,11 @@ import components.Accordion.AccordionExpansionCollapseListener;
 import components.Accordion.AccordionView;
 import src.Models.Step;
 
-public class ConsultGuidesAdapter extends BaseAdapter {
+public class ConsultGuideAdapter extends BaseAdapter {
     private List<Step> elements;
     private static AccordionView accordionView;
 
-    public ConsultGuidesAdapter(List<Step> elements) {
+    public ConsultGuideAdapter(List<Step> elements) {
         this.elements = elements;
     }
 
@@ -62,14 +62,14 @@ public class ConsultGuidesAdapter extends BaseAdapter {
         accordionView.setOnExpandCollapseListener(new AccordionExpansionCollapseListener() {
             @Override
             public void onExpanded(AccordionView newAccordionView) {
-                if (ConsultGuidesAdapter.accordionView == null) {
-                    ConsultGuidesAdapter.accordionView = newAccordionView;
+                if (ConsultGuideAdapter.accordionView == null) {
+                    ConsultGuideAdapter.accordionView = newAccordionView;
                     return;
                 }
 
-                if (ConsultGuidesAdapter.accordionView.getId() != newAccordionView.getId()) {
-                    ConsultGuidesAdapter.accordionView.collapse();
-                    ConsultGuidesAdapter.accordionView = newAccordionView;
+                if (ConsultGuideAdapter.accordionView.getId() != newAccordionView.getId()) {
+                    ConsultGuideAdapter.accordionView.collapse();
+                    ConsultGuideAdapter.accordionView = newAccordionView;
                 }
             }
 

@@ -14,11 +14,11 @@ import components.Accordion.AccordionExpansionCollapseListener;
 import components.Accordion.AccordionView;
 import src.Models.Contact;
 
-public class ConsultContactsAdapter extends BaseAdapter {
+public class ConsultContactAdapter extends BaseAdapter {
     private List<Contact> elements;
     private static AccordionView accordionView;
 
-    public ConsultContactsAdapter(List<Contact> elements) {
+    public ConsultContactAdapter(List<Contact> elements) {
         this.elements = elements;
     }
 
@@ -64,14 +64,14 @@ public class ConsultContactsAdapter extends BaseAdapter {
         accordionView.setOnExpandCollapseListener(new AccordionExpansionCollapseListener() {
             @Override
             public void onExpanded(AccordionView newAccordionView) {
-                if (ConsultContactsAdapter.accordionView == null) {
-                    ConsultContactsAdapter.accordionView = newAccordionView;
+                if (ConsultContactAdapter.accordionView == null) {
+                    ConsultContactAdapter.accordionView = newAccordionView;
                     return;
                 }
 
-                if (ConsultContactsAdapter.accordionView.getId() != newAccordionView.getId()) {
-                    ConsultContactsAdapter.accordionView.collapse();
-                    ConsultContactsAdapter.accordionView = newAccordionView;
+                if (ConsultContactAdapter.accordionView.getId() != newAccordionView.getId()) {
+                    ConsultContactAdapter.accordionView.collapse();
+                    ConsultContactAdapter.accordionView = newAccordionView;
                 }
             }
 
