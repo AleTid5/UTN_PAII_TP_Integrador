@@ -11,9 +11,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tp_cuatrimestral.R;
+
+import java.util.Objects;
 
 import src.Activities.Adapters.ManageHistoryAdapter;
 import src.Activities.ui.frequent_questions.FrequentQuestionsFragment;
@@ -22,6 +25,10 @@ import src.Activities.ui.history_form.HistoryFormFragment;
 public class ManageHistoryFragment extends Fragment {
 
     private ManageHistoryViewModel manageHistoryViewModel;
+
+    public static ManageHistoryFragment newInstance() {
+        return new ManageHistoryFragment();
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         manageHistoryViewModel = new ViewModelProvider(this).get(ManageHistoryViewModel.class);
@@ -40,12 +47,13 @@ public class ManageHistoryFragment extends Fragment {
 
         ((TextView) content.findViewById(R.id.link_add_history)).setOnClickListener(view -> {
             mainContent.removeView(content);
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_content, HistoryFormFragment.newInstance(), "findThisFragment")
-                    .addToBackStack(null)
-                    .commit();
             ((TextView) root.findViewById(R.id.main_title)).setText("Agregar historial");
+            HistoryFormFragment historyFormFragment = new HistoryFormFragment(inflater, container, savedInstanceState, mainContent, () -> {
+                mainContent.addView(content);
+                ((TextView) root.findViewById(R.id.main_title)).setText("Administrar historial");
+            });
+
+            mainContent.addView(historyFormFragment.getView());
         });
 
         return root;
