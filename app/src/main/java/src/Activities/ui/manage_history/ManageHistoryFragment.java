@@ -1,37 +1,30 @@
 package src.Activities.ui.manage_history;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tp_cuatrimestral.R;
 
-import java.util.Objects;
-
+import src.Activities.Adapters.ConsultGuideAdapter;
 import src.Activities.Adapters.ManageHistoryAdapter;
-import src.Activities.ui.frequent_questions.FrequentQuestionsFragment;
 import src.Activities.ui.history_form.HistoryFormFragment;
 
 public class ManageHistoryFragment extends Fragment {
 
     private ManageHistoryViewModel manageHistoryViewModel;
 
-    public static ManageHistoryFragment newInstance() {
-        return new ManageHistoryFragment();
-    }
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        manageHistoryViewModel = new ViewModelProvider(this).get(ManageHistoryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_main_layout, container, false);
 
         ((TextView) root.findViewById(R.id.main_title)).setText("Administrar historial");
@@ -42,20 +35,33 @@ public class ManageHistoryFragment extends Fragment {
 
         manageHistoryViewModel.getHistoryList().observe(getViewLifecycleOwner(), stepList -> {
             GridView gridView = requireView().findViewById(R.id.grid_view);
-            gridView.setAdapter(new ManageHistoryAdapter(stepList));
+            if (gridView != null) {
+                gridView.setAdapter(new ManageHistoryAdapter(stepList));
+            }
         });
 
         ((TextView) content.findViewById(R.id.link_add_history)).setOnClickListener(view -> {
             mainContent.removeView(content);
-            ((TextView) root.findViewById(R.id.main_title)).setText("Agregar historial");
-            HistoryFormFragment historyFormFragment = new HistoryFormFragment(inflater, container, savedInstanceState, mainContent, () -> {
-                mainContent.addView(content);
-                ((TextView) root.findViewById(R.id.main_title)).setText("Administrar historial");
-            });
 
-            mainContent.addView(historyFormFragment.getView());
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_content, HistoryFormFragment.newInstance())
+                    .commit();
+
+            ((TextView) root.findViewById(R.id.main_title)).setText("Agregar historial");
         });
 
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        manageHistoryViewModel = new ViewModelProvider(this).get(ManageHistoryViewModel.class);
     }
 }

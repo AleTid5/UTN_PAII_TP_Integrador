@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.tp_cuatrimestral.R;
 
 import src.Activities.ui.blocked_users.BlockedUsersFragment;
-import src.Activities.ui.history_form.HistoryFormFragment;
 
 public class SetupAccountFragment extends Fragment {
 

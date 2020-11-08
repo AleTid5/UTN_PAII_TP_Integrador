@@ -6,10 +6,8 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import src.Models.Step;
 import src.Models.User;
 import src.Services.Entities.UserService;
-import src.Services.Statics.FrequentQuestionsService;
 
 public class BlockedUsersViewModel extends ViewModel {
     private static MutableLiveData<List<User>> liveUserList = new MutableLiveData<>();
