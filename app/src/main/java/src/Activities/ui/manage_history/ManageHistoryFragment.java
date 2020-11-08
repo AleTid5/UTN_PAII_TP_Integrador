@@ -45,7 +45,7 @@ public class ManageHistoryFragment extends Fragment {
 
             getChildFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.main_content, HistoryFormFragment.newInstance())
+                    .replace(R.id.main_content, HistoryFormFragment.newInstance(null))
                     .commit();
 
             ((TextView) root.findViewById(R.id.main_title)).setText("Agregar historial");

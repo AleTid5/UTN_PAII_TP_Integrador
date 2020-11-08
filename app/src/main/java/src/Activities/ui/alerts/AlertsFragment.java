@@ -32,7 +32,7 @@ public class AlertsFragment extends Fragment {
         mainContent.addView(content);
 
         ((FloatingActionButton) root.findViewById(R.id.button_view_history)).setOnClickListener(
-                (View.OnClickListener) view -> {
+                view -> {
                     mainContent.removeView(content);
                     requireActivity().getSupportFragmentManager()
                             .beginTransaction()

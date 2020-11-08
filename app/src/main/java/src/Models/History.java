@@ -4,12 +4,16 @@ public class History extends BaseInformation {
     private Integer age;
     private String phoneNumber;
     private String observations;
+    private String imageURL;
 
-    public History(Integer id, String nameAndLastName, Integer DNI, String bornDate, Integer age, String phoneNumber, String observations) {
+    public History() {}
+
+    public History(Integer id, String nameAndLastName, Integer DNI, String bornDate, Integer age, String phoneNumber, String observations, String imageURL) {
         super(id, nameAndLastName, DNI, bornDate);
         this.age = age;
         this.phoneNumber = phoneNumber;
         this.observations = observations;
+        this.imageURL = imageURL;
     }
 
     public Integer getAge() {
@@ -34,5 +38,13 @@ public class History extends BaseInformation {
 
     public void setObservations(String observations) {
         this.observations = observations;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }

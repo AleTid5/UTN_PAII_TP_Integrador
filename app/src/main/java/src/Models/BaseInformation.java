@@ -6,6 +6,8 @@ public class BaseInformation {
     private Integer DNI;
     private String bornDate;
 
+    public BaseInformation() {}
+
     public BaseInformation(Integer id, String nameAndLastName, Integer DNI, String bornDate) {
         this.id = id;
         this.nameAndLastName = nameAndLastName;

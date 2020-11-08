@@ -36,9 +36,8 @@ public class FrequentQuestionsFragment extends Fragment {
             gridView.setAdapter(new ConsultGuideAdapter(stepList));
         });
 
-        ((TextView) root.findViewById(R.id.link_go_back)).setOnClickListener(
-                (View.OnClickListener) view -> SystemActivity.performClick(R.id.nav_consult_guides)
-        );
+        ((TextView) root.findViewById(R.id.link_go_back))
+                .setOnClickListener(view -> SystemActivity.performClick(R.id.nav_consult_guides));
 
         return root;
     }
