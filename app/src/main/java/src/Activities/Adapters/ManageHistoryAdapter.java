@@ -1,23 +1,28 @@
 package src.Activities.Adapters;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tp_cuatrimestral.R;
 
 import java.util.List;
 
+import src.Activities.ui.manage_history.ManageHistoryViewModel;
 import src.Models.History;
 
 public class ManageHistoryAdapter extends BaseAdapter {
     private List<History> elements;
+    private ManageHistoryViewModel manageHistoryViewModel;
 
-    public ManageHistoryAdapter(List<History> elements) {
+    public ManageHistoryAdapter(List<History> elements, ManageHistoryViewModel manageHistoryViewModel) {
         this.elements = elements;
+        this.manageHistoryViewModel = manageHistoryViewModel;
     }
 
     @Override
@@ -45,9 +50,16 @@ public class ManageHistoryAdapter extends BaseAdapter {
             newView = inflater.inflate(R.layout.adapter_manager_history,null);
         }
 
-        History step = getItem(i);
+        History history = getItem(i);
 
         ((TextView) newView.findViewById(R.id.text_name)).setText("Historial " + (i + 1));
+
+        ((ImageView) newView.findViewById(R.id.link_remove)).setOnClickListener(v -> new AlertDialog.Builder(v.getContext())
+                .setTitle("¿Eliminar el historial?")
+                .setMessage(String.format("¿Realmente desea eliminar el historial \"%s\"?", i + 1))
+                .setPositiveButton("Aceptar", (dialog, which) -> this.manageHistoryViewModel.removeHistory(history.getId()))
+                .setNegativeButton("Cancelar", null)
+                .create().show());
 
         return newView;
     }
