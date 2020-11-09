@@ -1,27 +1,24 @@
 package src.Models;
 
-public class History extends BaseInformation {
-    private Integer age;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+import src.Interfaces.Wrappable;
+import src.Services.Entities.UserService;
+import src.Validators.NumberValidator;
+
+public class History extends BaseInformation implements Wrappable {
     private String phoneNumber;
     private String observations;
-    private String imageURL;
+    private User user;
 
     public History() {}
 
-    public History(Integer id, String nameAndLastName, Integer DNI, String bornDate, Integer age, String phoneNumber, String observations, String imageURL) {
+    public History(String id, String nameAndLastName, Integer DNI, String bornDate, String phoneNumber, String observations) {
         super(id, nameAndLastName, DNI, bornDate);
-        this.age = age;
         this.phoneNumber = phoneNumber;
         this.observations = observations;
-        this.imageURL = imageURL;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
     }
 
     public String getPhoneNumber() {
@@ -40,11 +37,45 @@ public class History extends BaseInformation {
         this.observations = observations;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public User getUser() {
+        return user;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
+    @Override
+    public Map<String, Object> wrap() {
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("name", this.getNameAndLastName());
+        map.put("dni", this.getDNI());
+        map.put("born_date", this.getBornDate());
+        map.put("phone", this.getPhoneNumber());
+        map.put("observation", this.getObservations());
+        map.put("userId", this.user != null ? this.user.getId() : null);
+
+        return map;
+    }
+
+    @Override
+    public History unwrap(Map<String, Object> map) {
+        this.setId((String) map.get("id"));
+        this.setNameAndLastName((String) map.get("name"));
+        this.setBornDate((String) map.get("born_date"));
+        this.setPhoneNumber((String) map.get("phone"));
+        this.setObservations((String) map.get("observation"));
+
+        if (map.containsKey("dni")) {
+            this.setDNI(NumberValidator.wrapNumber(map.get("dni")));
+        }
+
+        if (map.containsKey("userId")) {
+            this.setUser(UserService.findUserById(NumberValidator.wrapNumber(map.get("userId"))));
+        }
+
+        return this;
     }
 }

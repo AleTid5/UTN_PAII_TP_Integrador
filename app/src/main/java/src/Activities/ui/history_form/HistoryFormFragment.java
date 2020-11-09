@@ -13,11 +13,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tp_cuatrimestral.R;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Objects;
 
 import src.Activities.SystemActivity;
 import src.Builders.HistoryFormBuilder;
 import src.Models.History;
 import src.Services.Entities.AlertService;
+import src.Services.Entities.HistoryService;
 
 public class HistoryFormFragment extends Fragment {
 
@@ -37,9 +41,7 @@ public class HistoryFormFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_history_form, container, false);
 
         ((TextView) root.findViewById(R.id.button_save))
-                .setOnClickListener(view -> {
-                    AlertService.save();
-                });
+                .setOnClickListener(view -> onSave());
 
         ((TextView) root.findViewById(R.id.link_view_history))
                 .setOnClickListener(view -> SystemActivity.performClick(R.id.nav_manage_history));
@@ -54,7 +56,19 @@ public class HistoryFormFragment extends Fragment {
     }
 
     private void onSave() {
-        History history = new HistoryFormBuilder()
-                .build();
+        try {
+            History history = new HistoryFormBuilder()
+                    .setNameAndLastName((TextView) requireView().findViewById(R.id.input_name))
+                    .setDNI((TextView) requireView().findViewById(R.id.input_dni))
+                    .setBornDate((TextView) requireView().findViewById(R.id.input_born_date))
+                    .setPhoneNumber((TextView) requireView().findViewById(R.id.input_phone))
+                    .setObservations((TextView) requireView().findViewById(R.id.input_observations))
+                    .build();
+
+            HistoryService.save(history);
+        } catch (Exception e) {
+            Snackbar.make(requireView(), Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
     }
 }

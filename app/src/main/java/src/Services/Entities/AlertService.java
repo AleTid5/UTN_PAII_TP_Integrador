@@ -1,18 +1,9 @@
 package src.Services.Entities;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +16,7 @@ public abstract class AlertService {
 
     public static List<Alert> getAlertList() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("alertas").get().addOnCompleteListener(task -> {
+        db.collection("alerts").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 alertList = new ArrayList<>();
                 for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
@@ -47,7 +38,7 @@ public abstract class AlertService {
         user.put("contact", "something");
         user.put("observations", "Lorem ipsum");
 
-        db.collection("alertas")
+        db.collection("alerts")
                 .add(user)
                 .addOnSuccessListener(documentReference -> System.out.println(documentReference.getId()))
                 .addOnFailureListener(Throwable::printStackTrace);

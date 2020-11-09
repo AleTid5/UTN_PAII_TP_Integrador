@@ -34,9 +34,11 @@ public class ManageHistoryFragment extends Fragment {
         mainContent.addView(content);
 
         manageHistoryViewModel.getHistoryList().observe(getViewLifecycleOwner(), stepList -> {
-            GridView gridView = requireView().findViewById(R.id.grid_view);
-            if (gridView != null) {
-                gridView.setAdapter(new ManageHistoryAdapter(stepList));
+            if (stepList != null) {
+                GridView gridView = requireView().findViewById(R.id.grid_view);
+                if (gridView != null) {
+                    gridView.setAdapter(new ManageHistoryAdapter(stepList));
+                }
             }
         });
 
