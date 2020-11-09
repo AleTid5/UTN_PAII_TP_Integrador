@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.tp_cuatrimestral.R;
 
 import src.Activities.ui.blocked_users.BlockedUsersFragment;
-import src.Activities.ui.history_form.HistoryFormFragment;
 
 public class SetupAccountFragment extends Fragment {
 
@@ -33,10 +32,9 @@ public class SetupAccountFragment extends Fragment {
 
         ((TextView) content.findViewById(R.id.link_blocked_users)).setOnClickListener(view -> {
             mainContent.removeView(content);
-            requireActivity().getSupportFragmentManager()
+            getChildFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.main_content, BlockedUsersFragment.newInstance(), "findThisFragment")
-                    .addToBackStack(null)
+                    .replace(R.id.main_content, BlockedUsersFragment.newInstance())
                     .commit();
             ((TextView) root.findViewById(R.id.main_title)).setText("Desbloquear usuarios");
         });

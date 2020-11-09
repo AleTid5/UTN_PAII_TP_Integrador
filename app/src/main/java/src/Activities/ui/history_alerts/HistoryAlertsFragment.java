@@ -30,8 +30,10 @@ public class HistoryAlertsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_history_alerts, container, false);
 
         historyAlertsViewModel.getAlertList().observe(getViewLifecycleOwner(), alertList -> {
-            GridView gridView = requireView().findViewById(R.id.grid_view);
-            gridView.setAdapter(new AlertAdapter(alertList));
+            if (alertList != null) {
+                GridView gridView = requireView().findViewById(R.id.grid_view);
+                gridView.setAdapter(new AlertAdapter(alertList));
+            }
         });
 
         return root;

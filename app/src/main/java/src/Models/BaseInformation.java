@@ -1,23 +1,25 @@
 package src.Models;
 
 public class BaseInformation {
-    private Integer id;
+    private String id;
     private String nameAndLastName;
     private Integer DNI;
     private String bornDate;
 
-    public BaseInformation(Integer id, String nameAndLastName, Integer DNI, String bornDate) {
+    public BaseInformation() {}
+
+    public BaseInformation(String id, String nameAndLastName, Integer DNI, String bornDate) {
         this.id = id;
         this.nameAndLastName = nameAndLastName;
         this.DNI = DNI;
         this.bornDate = bornDate;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

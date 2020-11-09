@@ -10,10 +10,7 @@ import com.example.tp_cuatrimestral.R;
 
 import java.util.List;
 
-import components.Accordion.AccordionExpansionCollapseListener;
 import components.Accordion.AccordionView;
-import src.Models.History;
-import src.Models.Step;
 import src.Models.User;
 
 public class BlockedUserAdapter extends BaseAdapter {

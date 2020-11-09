@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "922895702719",
+    "firebase_url": "https://obra-en-la-calle.firebaseio.com",
+    "project_id": "obra-en-la-calle",
+    "storage_bucket": "obra-en-la-calle.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922895702719:android:d58aa6316efc22e5fb040a",
+        "android_client_info": {
+          "package_name": "com.example.tp_cuatrimestral"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "922895702719-hi8k2s7t0pto636lm7v8ep82nkjl08cc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9KRvaiVeN2iUhiYF1OpECBciSvfJL_pM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "922895702719-hi8k2s7t0pto636lm7v8ep82nkjl08cc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
