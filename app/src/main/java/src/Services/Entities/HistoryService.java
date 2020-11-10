@@ -10,29 +10,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import src.Activities.ui.manage_history.ManageHistoryViewModel;
 import src.Models.Alert;
 import src.Models.History;
 
 public abstract class HistoryService {
-    private static List<History> historyList;
-
-    public static List<History> getHistoryList() {
+    public static void getHistoryList() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("historical_alerts").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                historyList = new ArrayList<>();
                 for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                     Map<String, Object> map = document.getData();
                     map.put("id", document.getId());
 
-                    historyList.add(new History().unwrap(map));
+                    ManageHistoryViewModel.addProduct(new History().unwrap(map));
                 }
             } else {
                 System.out.println("ERROR!");
             }
         });
-
-        return historyList;
     }
 
     public static void save(History history) {
@@ -42,6 +38,18 @@ public abstract class HistoryService {
                 .add(history.wrap())
                 .addOnSuccessListener(documentReference -> System.out.println(documentReference.getId()))
                 .addOnFailureListener(Throwable::printStackTrace);
+
+        ManageHistoryViewModel.addProduct(history);
+    }
+
+    public static void update(History history) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("historical_alerts")
+                .document(history.getId())
+                .update(history.wrap());
+
+        ManageHistoryViewModel.updateProduct(history);
     }
 
     public static void remove(String historicalId) {

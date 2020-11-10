@@ -42,7 +42,6 @@ public abstract class DateValidator {
             throw new Exception("La fecha ingresada es incorrecta. Recuerde que el formato debe ser dd/mm/aaaa, ej: 25/05/1981");
         }
 
-
         return dateToValidate;
     }
 

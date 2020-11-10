@@ -32,6 +32,14 @@ public abstract class NumberValidator {
         }
     }
 
+    public static String numberToString(Object number) {
+        try {
+            return Integer.toString((int) number);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     private static void numberCannotBeNull(String number) throws Exception {
         if (number == null) {
             throw new Exception("No se ha ingresado fecha de nacimiento");

@@ -1,5 +1,6 @@
 package src.Activities.ui.history_form;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,21 +18,20 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
+import components.Snackbar.CustomSnackbar;
 import src.Activities.SystemActivity;
 import src.Builders.HistoryFormBuilder;
 import src.Models.History;
-import src.Services.Entities.AlertService;
 import src.Services.Entities.HistoryService;
+import src.Validators.NumberValidator;
 
 public class HistoryFormFragment extends Fragment {
 
-    private HistoryFormViewModel historyFormViewModel;
     private static History history;
 
     public static HistoryFormFragment newInstance(History history) {
-        if (history != null) {
-            history = new History(); // Find in Database
-        }
+        HistoryFormFragment.history = history;
+
         return new HistoryFormFragment();
     }
 
@@ -40,19 +40,14 @@ public class HistoryFormFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_history_form, container, false);
 
-        ((TextView) root.findViewById(R.id.button_save))
-                .setOnClickListener(view -> onSave());
+        this.fillForm(root);
+
+        ((TextView) root.findViewById(R.id.button_save)).setOnClickListener(v -> onSave());
 
         ((TextView) root.findViewById(R.id.link_view_history))
-                .setOnClickListener(view -> SystemActivity.performClick(R.id.nav_manage_history));
+                .setOnClickListener(v -> SystemActivity.performClick(R.id.nav_manage_history));
 
         return root;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        historyFormViewModel = new ViewModelProvider(this).get(HistoryFormViewModel.class);
     }
 
     private void onSave() {
@@ -65,10 +60,28 @@ public class HistoryFormFragment extends Fragment {
                     .setObservations((TextView) requireView().findViewById(R.id.input_observations))
                     .build();
 
-            HistoryService.save(history);
+            if (HistoryFormFragment.history == null) {
+                HistoryService.save(history);
+            } else {
+                history.setId(HistoryFormFragment.history.getId());
+                HistoryService.update(history);
+            }
+
+            new CustomSnackbar(requireView(), "¡La operación ha sido exitosa!").success();
+            SystemActivity.performClick(R.id.nav_manage_history);
         } catch (Exception e) {
-            Snackbar.make(requireView(), Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            new CustomSnackbar(requireView(), Objects.requireNonNull(e.getMessage())).danger();
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void fillForm(View root) {
+        if (HistoryFormFragment.history != null) {
+            ((TextView) root.findViewById(R.id.input_name)).setText(HistoryFormFragment.history.getNameAndLastName());
+            ((TextView) root.findViewById(R.id.input_dni)).setText(NumberValidator.numberToString(HistoryFormFragment.history.getDNI()));
+            ((TextView) root.findViewById(R.id.input_born_date)).setText(HistoryFormFragment.history.getBornDate());
+            ((TextView) root.findViewById(R.id.input_phone)).setText(HistoryFormFragment.history.getPhoneNumber());
+            ((TextView) root.findViewById(R.id.input_observations)).setText(HistoryFormFragment.history.getObservations());
         }
     }
 }
