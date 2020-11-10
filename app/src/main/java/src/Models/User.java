@@ -4,7 +4,7 @@ public class User extends BaseInformation {
     private String userName;
     private String password;
 
-    public User(Integer id, String nameAndLastName, Integer DNI, String bornDate, String userName, String password) {
+    public User(String id, String nameAndLastName, Integer DNI, String bornDate, String userName, String password) {
         super(id, nameAndLastName, DNI, bornDate);
         this.userName = userName;
         this.password = password;

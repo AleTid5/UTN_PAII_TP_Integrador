@@ -1,18 +1,11 @@
 package src.Activities.ui.history_form;
 
-import android.app.AlertDialog;
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,25 +14,24 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tp_cuatrimestral.R;
+import com.google.android.material.snackbar.Snackbar;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Objects;
 
-import components.WithImageFragment.WithImageFragment;
+import components.Snackbar.CustomSnackbar;
 import src.Activities.SystemActivity;
 import src.Builders.HistoryFormBuilder;
 import src.Models.History;
+import src.Services.Entities.HistoryService;
+import src.Validators.NumberValidator;
 
-public class HistoryFormFragment extends WithImageFragment {
+public class HistoryFormFragment extends Fragment {
 
-    private HistoryFormViewModel historyFormViewModel;
     private static History history;
 
     public static HistoryFormFragment newInstance(History history) {
-        if (history != null) {
-            history = new History(); // Find in Database
-        }
+        HistoryFormFragment.history = history;
+
         return new HistoryFormFragment();
     }
 
@@ -48,37 +40,48 @@ public class HistoryFormFragment extends WithImageFragment {
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_history_form, container, false);
 
-        ((TextView) root.findViewById(R.id.button_image))
-                .setOnClickListener(view -> openGallery(1));
+        this.fillForm(root);
 
-        ((TextView) root.findViewById(R.id.link_view_loaded_image))
-                .setOnClickListener(view -> showImage());
+        ((TextView) root.findViewById(R.id.button_save)).setOnClickListener(v -> onSave());
 
-        ((TextView) root.findViewById(R.id.button_save))
-                .setOnClickListener(view -> SystemActivity.performClick(R.id.nav_manage_history));
-
-        ((TextView) root.findViewById(R.id.link_cancel))
-                .setOnClickListener(view -> SystemActivity.performClick(R.id.nav_manage_history));
+        ((TextView) root.findViewById(R.id.link_view_history))
+                .setOnClickListener(v -> SystemActivity.performClick(R.id.nav_manage_history));
 
         return root;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        historyFormViewModel = new ViewModelProvider(this).get(HistoryFormViewModel.class);
-    }
+    private void onSave() {
+        try {
+            History history = new HistoryFormBuilder()
+                    .setNameAndLastName((TextView) requireView().findViewById(R.id.input_name))
+                    .setDNI((TextView) requireView().findViewById(R.id.input_dni))
+                    .setBornDate((TextView) requireView().findViewById(R.id.input_born_date))
+                    .setPhoneNumber((TextView) requireView().findViewById(R.id.input_phone))
+                    .setObservations((TextView) requireView().findViewById(R.id.input_observations))
+                    .build();
 
-    private void beforeSave() {
-        if (this.getImage() == null) {
-            // ToDo: Ask if is ok continue without an image.
+            if (HistoryFormFragment.history == null) {
+                HistoryService.save(history);
+            } else {
+                history.setId(HistoryFormFragment.history.getId());
+                HistoryService.update(history);
+            }
+
+            new CustomSnackbar(requireView(), "¡La operación ha sido exitosa!").success();
+            SystemActivity.performClick(R.id.nav_manage_history);
+        } catch (Exception e) {
+            new CustomSnackbar(requireView(), Objects.requireNonNull(e.getMessage())).danger();
         }
     }
 
-    private void onSave() {
-        this.beforeSave();
-
-        History history = new HistoryFormBuilder()
-                .build();
+    @SuppressLint("SetTextI18n")
+    private void fillForm(View root) {
+        if (HistoryFormFragment.history != null) {
+            ((TextView) root.findViewById(R.id.input_name)).setText(HistoryFormFragment.history.getNameAndLastName());
+            ((TextView) root.findViewById(R.id.input_dni)).setText(NumberValidator.numberToString(HistoryFormFragment.history.getDNI()));
+            ((TextView) root.findViewById(R.id.input_born_date)).setText(HistoryFormFragment.history.getBornDate());
+            ((TextView) root.findViewById(R.id.input_phone)).setText(HistoryFormFragment.history.getPhoneNumber());
+            ((TextView) root.findViewById(R.id.input_observations)).setText(HistoryFormFragment.history.getObservations());
+        }
     }
 }

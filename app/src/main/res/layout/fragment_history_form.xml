@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!--
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,6 +43,7 @@
             android:backgroundTint="#D81B60"
             android:text="Agregar imagen"
             android:textColor="#FFFFFF" />
+            -->
 
         <EditText
             android:id="@+id/input_name"
@@ -115,7 +117,7 @@
             android:textColor="#FFFFFF" />
 
         <TextView
-            android:id="@+id/link_cancel"
+            android:id="@+id/link_view_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

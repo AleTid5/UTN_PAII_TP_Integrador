@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tp_cuatrimestral.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import src.Activities.ui.history_alerts.HistoryAlertsFragment;
 
@@ -31,13 +30,12 @@ public class AlertsFragment extends Fragment {
         View content = getLayoutInflater().inflate(R.layout.fragment_alerts, mainContent, false);
         mainContent.addView(content);
 
-        ((FloatingActionButton) root.findViewById(R.id.button_view_history)).setOnClickListener(
+        ((TextView) root.findViewById(R.id.link_view_history)).setOnClickListener(
                 view -> {
                     mainContent.removeView(content);
-                    requireActivity().getSupportFragmentManager()
+                    getChildFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.main_content, HistoryAlertsFragment.newInstance(), "findThisFragment")
-                            .addToBackStack(null)
+                            .replace(R.id.main_content, HistoryAlertsFragment.newInstance())
                             .commit();
                     ((TextView) root.findViewById(R.id.main_title)).setText("Historial de alertas");
                 }

@@ -18,6 +18,7 @@ import com.example.tp_cuatrimestral.R;
 
 import src.Activities.Adapters.ConsultGuideAdapter;
 import src.Activities.Adapters.ManageHistoryAdapter;
+import src.Activities.Transporter.ManageHistoryTransporter;
 import src.Activities.ui.history_form.HistoryFormFragment;
 
 public class ManageHistoryFragment extends Fragment {
@@ -32,11 +33,14 @@ public class ManageHistoryFragment extends Fragment {
         FrameLayout mainContent = root.findViewById(R.id.main_content);
         View content = getLayoutInflater().inflate(R.layout.fragment_manage_history, mainContent, false);
         mainContent.addView(content);
+        ManageHistoryTransporter.transport(root, content, getChildFragmentManager(), mainContent);
 
         manageHistoryViewModel.getHistoryList().observe(getViewLifecycleOwner(), stepList -> {
-            GridView gridView = requireView().findViewById(R.id.grid_view);
-            if (gridView != null) {
-                gridView.setAdapter(new ManageHistoryAdapter(stepList));
+            if (stepList != null) {
+                GridView gridView = requireView().findViewById(R.id.grid_view);
+                if (gridView != null) {
+                    gridView.setAdapter(new ManageHistoryAdapter(stepList, manageHistoryViewModel));
+                }
             }
         });
 
@@ -52,11 +56,6 @@ public class ManageHistoryFragment extends Fragment {
         });
 
         return root;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
