@@ -3,11 +3,15 @@ package src.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tp_cuatrimestral.R;
 
+import java.util.Objects;
+
+import components.Snackbar.CustomSnackbar;
 import src.Services.ContextManagerService;
 
 public class LoginActivity extends AppCompatActivity {
@@ -20,8 +24,25 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLogin(View view) {
-        startActivity(new Intent(this, SystemActivity.class));
+        try
+        {
+            String userName=((TextView)this.findViewById(R.id.input_dni)).getText().toString().trim();
+            if (userName.length() == 0){
+                throw new Exception("Debe completar el campo del nombre de usuario");
+            }
+            String password=((TextView)this.findViewById(R.id.input_password)).getText().toString().trim();
+            if (password.length() == 0) {
+                throw new Exception("Debe completar el campo contraseña");
+            }
+            startActivity(new Intent(this, SystemActivity.class));
+        }
+        catch (Exception ex)
+        {
+            new CustomSnackbar(view, Objects.requireNonNull(ex.getMessage())).danger();
+        }
     }
+
+
 
     public void onRegister(View view) {
         startActivity(new Intent(this, RegisterActivity.class));
