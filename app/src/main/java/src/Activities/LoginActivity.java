@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tp_cuatrimestral.R;
 
+import src.Models.User;
 import src.Services.ContextManagerService;
+import src.Services.SessionService;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -20,6 +22,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLogin(View view) {
+        // Logica de inicio de sesión
+        User user = new User(null, null, null, null, null, null);
+        user.setId("123");
+        SessionService.setUser(user);
         startActivity(new Intent(this, SystemActivity.class));
     }
 

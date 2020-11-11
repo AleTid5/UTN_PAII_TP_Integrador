@@ -2,7 +2,6 @@ package src.Activities;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,7 +14,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.tp_cuatrimestral.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 public class SystemActivity extends AppCompatActivity {
 
