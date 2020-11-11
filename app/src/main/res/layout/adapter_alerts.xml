@@ -10,9 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="#AFAFAF"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="10dp"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
+            android:id="@+id/adapter_alert_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -31,7 +33,7 @@
                 android:textColor="#282828" />
 
             <ImageView
-                android:id="@+id/link_edit"
+                android:id="@+id/link_view_alert"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
@@ -40,7 +42,7 @@
                 app:tint="#282828" />
 
             <ImageView
-                android:id="@+id/link_observation_popup"
+                android:id="@+id/link_block_user"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical"

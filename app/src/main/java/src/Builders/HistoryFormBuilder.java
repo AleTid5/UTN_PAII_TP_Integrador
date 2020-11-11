@@ -3,6 +3,7 @@ package src.Builders;
 import android.widget.TextView;
 
 import src.Models.History;
+import src.Services.SessionService;
 import src.Validators.DateValidator;
 import src.Validators.NumberValidator;
 
@@ -29,6 +30,7 @@ public class HistoryFormBuilder {
 
         return this;
     }
+
     public HistoryFormBuilder setDNI(TextView inputDNI) throws Exception {
         String textDNI = inputDNI.getText().toString().trim();
 
@@ -39,6 +41,7 @@ public class HistoryFormBuilder {
 
         return this;
     }
+
     public HistoryFormBuilder setBornDate(TextView inputBornDate) throws Exception {
         String textBornDate = inputBornDate.getText().toString().trim();
 
@@ -49,6 +52,7 @@ public class HistoryFormBuilder {
 
         return this;
     }
+
     public HistoryFormBuilder setPhoneNumber(TextView inputPhoneNumber) throws Exception {
         String textPhoneNumber = inputPhoneNumber.getText().toString().replace(" ", "");
 
@@ -63,6 +67,7 @@ public class HistoryFormBuilder {
 
         return this;
     }
+
     public HistoryFormBuilder setObservations(TextView inputObservations) {
         String textObservations = inputObservations.getText().toString().trim();
 
@@ -78,6 +83,8 @@ public class HistoryFormBuilder {
         if (reportIndexControl.equals(0)) {
             throw new Exception("Debe completar al menos un campo del formulario");
         }
+
+        history.setUserId(SessionService.getUser().getId());
 
         return history;
     }

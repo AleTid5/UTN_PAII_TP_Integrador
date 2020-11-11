@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingTop="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="16dp">
+
+    <LinearLayout
+        android:id="@+id/dialog_alert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <TextView
+            android:id="@+id/dialog_alert_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Alerta"
+            android:textColor="#E91E63"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/dialog_alert_place"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Lugar de encuentro"
+                android:textColor="#E91E63"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="XXXXXXXXX"
+                android:textColor="#E91E63" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dialog_alert_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Nombre y apellido"
+                android:textColor="#E91E63"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="XXXXXXXXX"
+                android:textColor="#E91E63" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dialog_alert_contact"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Contacto"
+                android:textColor="#E91E63"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="XXXXXXXXX"
+                android:textColor="#E91E63" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dialog_alert_observations"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Observaciones"
+                android:textColor="#E91E63"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_observations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="XXXXXXXXX"
+                android:textColor="#E91E63" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_accept"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#D81B60"
+            android:text="Aceptar"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+</RelativeLayout>

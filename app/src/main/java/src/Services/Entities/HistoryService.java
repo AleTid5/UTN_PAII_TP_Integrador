@@ -3,15 +3,10 @@ package src.Services.Entities;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import src.Activities.ui.manage_history.ManageHistoryViewModel;
-import src.Models.Alert;
 import src.Models.History;
 
 public abstract class HistoryService {
@@ -36,7 +31,6 @@ public abstract class HistoryService {
 
         db.collection("historical_alerts")
                 .add(history.wrap())
-                .addOnSuccessListener(documentReference -> System.out.println(documentReference.getId()))
                 .addOnFailureListener(Throwable::printStackTrace);
 
         ManageHistoryViewModel.addProduct(history);
