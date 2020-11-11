@@ -16,4 +16,8 @@
     <string name="menu_dashboard">Dashboard</string>
     <string name="menu_manage_history">Administrar historial</string>
     <string name="menu_setup_account">Configurar cuenta</string>
+
+
+    <string name="text_email">E-Mail</string>
+    <string name="text_password">Contraseña</string>
 </resources>
