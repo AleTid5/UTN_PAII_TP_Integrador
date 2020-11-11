@@ -13,6 +13,7 @@ import java.util.Objects;
 
 import components.Snackbar.CustomSnackbar;
 import src.Services.ContextManagerService;
+import src.Services.Entities.UserService;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -34,6 +35,9 @@ public class LoginActivity extends AppCompatActivity {
             if (password.length() == 0) {
                 throw new Exception("Debe completar el campo contraseña");
             }
+
+            UserService.authenticateUser(userName,password);
+
             startActivity(new Intent(this, SystemActivity.class));
         }
         catch (Exception ex)

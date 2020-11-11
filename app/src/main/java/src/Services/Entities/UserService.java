@@ -1,12 +1,18 @@
 package src.Services.Entities;
 
+import android.animation.ObjectAnimator;
+
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.internal.bind.ObjectTypeAdapter;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import src.Models.User;
+import src.Services.SessionService;
 
 public abstract class UserService {
     private static List<User> userList = Arrays.asList(
@@ -35,7 +41,13 @@ public abstract class UserService {
                     .get()
                     .addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
-                            Map<String, Object>
+
+                            List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
+                            if(documentSnapshots.size() != 1)
+                            {
+                                //throw new Exception("Usuario y/o contraseña incorrectos");
+                            }
+                            //SessionService.setUser(new User());
                         }
                     });
         }
