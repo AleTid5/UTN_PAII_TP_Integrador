@@ -9,10 +9,10 @@ import src.Database.Internal.Tables.ContactsTable;
 
 public abstract class ContactsMigration {
     private static final List<List<String>> dataToInsert = Arrays.asList(
-            Arrays.asList("Refugio 1", "Lorem Ipsum", "refugio1@gmail.com", "Av. Cazón 3321, Tigre"),
-            Arrays.asList("Refugio 2", "Lorem Ipsum", "refugio2@gmail.com", "Av. Dardo Rocha 214, Tigre"),
-            Arrays.asList("Refugio 3", "Lorem Ipsum", "refugio3@gmail.com", "Comandante Yacas 142, Tigre"),
-            Arrays.asList("Refugio 4", "Lorem Ipsum", "refugio4@gmail.com", "Av. Presidente Perón 567, San Fernando"),
+            Arrays.asList("Duchas Santa Teresa", "Lorem Ipsum", "duchasensantateresa@gmail.com", "Islas Orcadas y Neuquén 1617, General Pacheco (Tigre)"),
+            Arrays.asList("El Refugio", "Lorem Ipsum", "-", "Enciso 425, Tigre"),
+            Arrays.asList("Municipio Tigre", "probando informacion a er si entra", "refugio3@gmail.com", "Comandante Yacas 142, Tigre"),
+            Arrays.asList("Secretaría de Desarrollo Social", "Lorem Ipsum", "direcciontrabajosocial@tigre.gob.ar/refugionocturno@tigre.gob.ar", "Av. Presidente Perón 567, San Fernando"),
             Arrays.asList("Refugio 5", "Lorem Ipsum", "refugio5@gmail.com", "Av. Sobremonte 5436, San Fernando"),
             Arrays.asList("Refugio 6", "Lorem Ipsum", "refugio6@gmail.com", "Av. Nicolás Avellaneda 840, San Fernando"),
             Arrays.asList("Refugio 7", "Lorem Ipsum", "refugio7@gmail.com", "Av. Hipólito Yrigoyen 4456, Barrio San Jorge"),
