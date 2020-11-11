@@ -1,8 +1,11 @@
 package src.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -14,6 +17,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.tp_cuatrimestral.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+
+import src.Services.Entities.UserSessionService;
 
 public class SystemActivity extends AppCompatActivity {
 
@@ -68,5 +73,15 @@ public class SystemActivity extends AppCompatActivity {
 
     public static void performClick(int itemMenuId) {
         systemActivity.findViewById(itemMenuId).performClick();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_logout) {
+            UserSessionService.cleanSession();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

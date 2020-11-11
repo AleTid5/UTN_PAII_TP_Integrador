@@ -3,14 +3,10 @@ package src.Activities.Adapters;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.tp_cuatrimestral.R;
@@ -21,8 +17,7 @@ import java.util.stream.Collectors;
 
 import src.Activities.ui.history_alerts.HistoryAlertsViewModel;
 import src.Models.Alert;
-import src.Services.Entities.AlertService;
-import src.Services.SessionService;
+import src.Services.Entities.UserSessionService;
 
 public class AlertAdapter extends BaseAdapter {
     private List<Alert> elements;
@@ -65,7 +60,7 @@ public class AlertAdapter extends BaseAdapter {
             dialog.show();
         });
 
-        if (SessionService.getUser().getId().equals(alert.getUserId())) {
+        if (UserSessionService.getUser().getId().equals(alert.getUserId())) {
             ((ViewGroup) newView.findViewById(R.id.adapter_alert_layout)).removeView(newView.findViewById(R.id.link_block_user));
         } else {
             ((View) newView.findViewById(R.id.link_block_user)).setOnClickListener(v -> {
@@ -84,7 +79,7 @@ public class AlertAdapter extends BaseAdapter {
     private List<Alert> getFilteredList(List<Alert> elements) {
         return Objects.requireNonNull(elements)
                 .stream()
-                .filter(p -> HistoryAlertsViewModel.getOwnerStatusList().getValue() == p.getUserId().equals(SessionService.getUser().getId()))
+                .filter(p -> HistoryAlertsViewModel.getOwnerStatusList().getValue() == p.getUserId().equals(UserSessionService.getUser().getId()))
                 .collect(Collectors.toList());
     }
 

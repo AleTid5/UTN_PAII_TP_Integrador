@@ -1,11 +1,11 @@
-package src.Database.Internal.Migrations;
+package src.Database.Migrations;
 
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.Arrays;
 import java.util.List;
 
-import src.Database.Internal.Tables.PhonesTable;
+import src.Database.Tables.PhonesTable;
 
 public abstract class PhonesMigration {
     public static final List<String> dataToInsert = Arrays.asList(

@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import src.Activities.ui.setup_account.UserViewModel;
+import src.Models.User;
+
 public abstract class PasswordRecoveryService {
     public static void recoverPassword(Integer DNI) throws Exception {
         try {
@@ -15,14 +18,21 @@ public abstract class PasswordRecoveryService {
                     .whereEqualTo("dni",DNI)
                     .get()
                     .addOnCompleteListener(task -> {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
+
                             if (documentSnapshots.size() > 0) {
                                 Map<String,Object> map = documentSnapshots.get(0).getData();
-                                String email=(String)map.get("email");
-                                System.out.println(email);
-                            }
+                                assert map != null;
 
+                                User user = new User();
+                                user.setEmail((String) map.get("email"));
+
+                                UserViewModel.onUserChange(user);
+                                // ToDo: Send Email
+                            } else {
+                                UserViewModel.onUserChange(null);
+                            }
                         }
                     });
         } catch(Exception ex) {

@@ -1,10 +1,11 @@
-package src.Database.Internal.Migrations;
+package src.Database.Migrations;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import src.Database.Internal.Tables.ContactPhonesTable;
-import src.Database.Internal.Tables.ContactsTable;
-import src.Database.Internal.Tables.PhonesTable;
+import src.Database.Tables.ContactPhonesTable;
+import src.Database.Tables.ContactsTable;
+import src.Database.Tables.PhonesTable;
+import src.Database.Tables.UserTable;
 
 public abstract class SkeletonMigration {
     public static void execute(SQLiteDatabase sqLiteDatabase) {
@@ -26,5 +27,14 @@ public abstract class SkeletonMigration {
                 + " PRIMARY KEY(" + ContactPhonesTable.CONTACT_ID + ", " + ContactPhonesTable.PHONE_ID + "), "
                 + " FOREIGN KEY(" + ContactPhonesTable.CONTACT_ID + ") REFERENCES " + ContactsTable.TABLE_NAME + "(" + ContactsTable._ID + "), "
                 + " FOREIGN KEY(" + ContactPhonesTable.PHONE_ID + ") REFERENCES " + PhonesTable.TABLE_NAME + "(" + ContactsTable._ID + "))");
+
+        sqLiteDatabase.execSQL("CREATE TABLE " + UserTable.TABLE_NAME + " ("
+                + UserTable.ID + " TEXT PRIMARY KEY,"
+                + UserTable.NAME + " TEXT NOT NULL,"
+                + UserTable.DNI + " INTEGER NOT NULL,"
+                + UserTable.EMAIL + " TEXT NOT NULL,"
+                + UserTable.BORN_DATE + " TEXT NOT NULL,"
+                + UserTable.USERNAME + " TEXT NOT NULL,"
+                + UserTable.PASSWORD + " TEXT NOT NULL)");
     }
 }

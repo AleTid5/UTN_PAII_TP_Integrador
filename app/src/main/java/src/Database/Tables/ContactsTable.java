@@ -1,4 +1,4 @@
-package src.Database.Internal.Tables;
+package src.Database.Tables;
 
 import android.provider.BaseColumns;
 

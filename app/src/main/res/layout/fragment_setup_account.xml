@@ -75,8 +75,19 @@
             android:textColor="#D81B60"
             android:textColorHint="#D81B60" />
 
+        <EditText
+            android:id="@+id/input_password_repeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Repita la contraseña"
+            android:inputType="textPassword"
+            android:paddingTop="20dp"
+            android:textColor="#D81B60"
+            android:textColorHint="#D81B60" />
+
         <Button
-            android:id="@+id/button_login"
+            android:id="@+id/button_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#D81B60"

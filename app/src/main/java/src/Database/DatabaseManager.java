@@ -1,13 +1,13 @@
-package src.Database.Internal;
+package src.Database;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import src.Database.Internal.Migrations.ContactPhonesMigration;
-import src.Database.Internal.Migrations.ContactsMigration;
-import src.Database.Internal.Migrations.PhonesMigration;
-import src.Database.Internal.Migrations.SkeletonMigration;
+import src.Database.Migrations.ContactPhonesMigration;
+import src.Database.Migrations.ContactsMigration;
+import src.Database.Migrations.PhonesMigration;
+import src.Database.Migrations.SkeletonMigration;
 import src.Interfaces.Entity;
 import src.Services.ContextManagerService;
 
@@ -17,7 +17,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public DatabaseManager() {
         super(ContextManagerService.getContext(), DATABASE_NAME, null, DATABASE_VERSION);
-        ContextManagerService.getContext().deleteDatabase(DATABASE_NAME);
     }
 
     @Override

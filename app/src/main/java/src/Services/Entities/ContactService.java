@@ -5,10 +5,10 @@ import android.database.Cursor;
 import java.util.LinkedList;
 import java.util.List;
 
-import src.Database.Internal.DatabaseManager;
-import src.Database.Internal.Tables.ContactPhonesTable;
-import src.Database.Internal.Tables.ContactsTable;
-import src.Database.Internal.Tables.PhonesTable;
+import src.Database.DatabaseManager;
+import src.Database.Tables.ContactPhonesTable;
+import src.Database.Tables.ContactsTable;
+import src.Database.Tables.PhonesTable;
 import src.Models.Contact;
 import src.Models.Phone;
 
