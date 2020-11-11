@@ -10,9 +10,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import src.Models.Alert;
-import src.Models.History;
 import src.Services.Entities.AlertService;
-import src.Services.Entities.HistoryService;
 
 public class HistoryAlertsViewModel extends ViewModel {
     private static MutableLiveData<List<Alert>> liveAlertList = new MutableLiveData<>();

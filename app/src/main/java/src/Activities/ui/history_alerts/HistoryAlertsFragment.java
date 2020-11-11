@@ -1,7 +1,5 @@
 package src.Activities.ui.history_alerts;
 
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;

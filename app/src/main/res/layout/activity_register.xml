@@ -125,7 +125,7 @@
                     android:textColorHint="#D81B60" />
 
                 <Button
-                    android:id="@+id/button_login"
+                    android:id="@+id/button_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#D81B60"
@@ -134,12 +134,13 @@
                     android:textColor="#FFFFFF" />
 
                 <TextView
-                    android:id="@+id/link_view_history"
+                    android:id="@+id/link_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingTop="10dp"
                     android:text="INICIAR SESIÓN"
+                    android:onClick="onLogin"
                     android:textColor="#D81B60"
                     android:textSize="14dp" />
             </LinearLayout>

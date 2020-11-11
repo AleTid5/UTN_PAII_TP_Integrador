@@ -3,14 +3,10 @@ package src.Activities.Adapters;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.tp_cuatrimestral.R;
@@ -21,7 +17,6 @@ import java.util.stream.Collectors;
 
 import src.Activities.ui.history_alerts.HistoryAlertsViewModel;
 import src.Models.Alert;
-import src.Services.Entities.AlertService;
 import src.Services.SessionService;
 
 public class AlertAdapter extends BaseAdapter {
