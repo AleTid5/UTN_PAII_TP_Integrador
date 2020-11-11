@@ -1,7 +1,5 @@
 package src.Validators;
 
-import java.util.Objects;
-
 public abstract class NumberValidator {
 
     public static Integer validateDNI(String number) throws Exception {
@@ -14,13 +12,13 @@ public abstract class NumberValidator {
                 throw new Exception("El DNI solo puede contener caracteres numéricos");
             }
 
-            if (number.length() > 8) {
-                throw new Exception("El DNI puede contener hasta 8 dígitos");
+            if (number.length() != 8) {
+                throw new Exception("El DNI debe contener 8 dígitos");
             }
 
             return Integer.parseInt(number);
         } catch (Exception e) {
-            throw new Exception("El DNI solo puede contener caracteres numéricos de hasta 8 digitos");
+            throw new Exception("El DNI solo puede contener 8 digitos numéricos");
         }
     }
 

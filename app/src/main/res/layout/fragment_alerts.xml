@@ -81,7 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Lugar de encuentro"
+            android:hint="Lugar de encuentro *"
             android:inputType="textPersonName"
             android:textColor="#D81B60"
             android:textColorHint="#D81B60" />

@@ -10,13 +10,11 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tp_cuatrimestral.R;
 
-import src.Activities.Adapters.ConsultGuideAdapter;
 import src.Activities.Adapters.ManageHistoryAdapter;
 import src.Activities.Transporter.ManageHistoryTransporter;
 import src.Activities.ui.history_form.HistoryFormFragment;

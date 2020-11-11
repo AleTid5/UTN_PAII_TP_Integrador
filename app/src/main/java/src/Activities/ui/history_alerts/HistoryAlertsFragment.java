@@ -1,10 +1,14 @@
 package src.Activities.ui.history_alerts;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +38,23 @@ public class HistoryAlertsFragment extends Fragment {
                 GridView gridView = requireView().findViewById(R.id.grid_view);
                 gridView.setAdapter(new AlertAdapter(alertList));
             }
+        });
+
+        HistoryAlertsViewModel.getOwnerStatusList().observe(getViewLifecycleOwner(), status -> {
+            GridView gridView = requireView().findViewById(R.id.grid_view);
+            gridView.setAdapter(new AlertAdapter(historyAlertsViewModel.getAlertList().getValue()));
+        });
+
+        ((TextView) root.findViewById(R.id.link_my_alerts)).setOnClickListener(v -> {
+            ((TextView) root.findViewById(R.id.link_other_alerts)).setTypeface(null, Typeface.NORMAL);
+            ((TextView) root.findViewById(R.id.link_my_alerts)).setTypeface(null, Typeface.BOLD);
+            historyAlertsViewModel.toggleOwnerVisibilityAlerts(true);
+        });
+
+        ((TextView) root.findViewById(R.id.link_other_alerts)).setOnClickListener(v -> {
+            ((TextView) root.findViewById(R.id.link_other_alerts)).setTypeface(null, Typeface.BOLD);
+            ((TextView) root.findViewById(R.id.link_my_alerts)).setTypeface(null, Typeface.NORMAL);
+            historyAlertsViewModel.toggleOwnerVisibilityAlerts(false);
         });
 
         return root;

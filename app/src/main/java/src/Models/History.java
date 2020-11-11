@@ -2,24 +2,15 @@ package src.Models;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import src.Interfaces.Wrappable;
-import src.Services.Entities.UserService;
 import src.Validators.NumberValidator;
 
 public class History extends BaseInformation implements Wrappable {
     private String phoneNumber;
     private String observations;
-    private User user;
-
-    public History() {}
-
-    public History(String id, String nameAndLastName, Integer DNI, String bornDate, String phoneNumber, String observations) {
-        super(id, nameAndLastName, DNI, bornDate);
-        this.phoneNumber = phoneNumber;
-        this.observations = observations;
-    }
+    private String userId;
+    private String createdDate;
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -37,14 +28,17 @@ public class History extends BaseInformation implements Wrappable {
         this.observations = observations;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
+    public String getCreatedDate() {
+        return createdDate;
+    }
 
     @Override
     public Map<String, Object> wrap() {
@@ -55,7 +49,8 @@ public class History extends BaseInformation implements Wrappable {
         map.put("born_date", this.getBornDate());
         map.put("phone", this.getPhoneNumber());
         map.put("observation", this.getObservations());
-        map.put("userId", this.user != null ? this.user.getId() : null);
+        map.put("user_id", this.getUserId());
+        map.put("created_date", this.getCreatedDate());
 
         return map;
     }
@@ -67,13 +62,11 @@ public class History extends BaseInformation implements Wrappable {
         this.setBornDate((String) map.get("born_date"));
         this.setPhoneNumber((String) map.get("phone"));
         this.setObservations((String) map.get("observation"));
+        this.setUserId((String) map.get("user_id"));
+        this.createdDate = (String) map.get("created_date");
 
         if (map.containsKey("dni")) {
             this.setDNI(NumberValidator.wrapNumber(map.get("dni")));
-        }
-
-        if (map.containsKey("userId")) {
-            this.setUser(UserService.findUserById(NumberValidator.wrapNumber(map.get("userId"))));
         }
 
         return this;
