@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import src.Activities.UnauthorizedViewModel;
+import src.Activities.ui.setup_account.UserViewModel;
 import src.Models.User;
 
 public abstract class PasswordRecoveryService {
@@ -28,10 +28,10 @@ public abstract class PasswordRecoveryService {
                                 User user = new User();
                                 user.setEmail((String) map.get("email"));
 
-                                UnauthorizedViewModel.onUserChange(user);
+                                UserViewModel.onUserChange(user);
                                 // ToDo: Send Email
                             } else {
-                                UnauthorizedViewModel.onUserChange(null);
+                                UserViewModel.onUserChange(null);
                             }
                         }
                     });

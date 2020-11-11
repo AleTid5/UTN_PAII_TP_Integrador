@@ -1,14 +1,18 @@
 package src.Models;
 
+import android.content.ContentValues;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import src.Database.Tables.UserTable;
+import src.Interfaces.Entity;
 import src.Interfaces.Wrappable;
 import src.Validators.NumberValidator;
 import src.Validators.PasswordValidator;
 
-public class User extends BaseInformation implements Wrappable {
+public class User extends BaseInformation implements Wrappable, Entity {
     private String email;
     private String userName;
     private String password;
@@ -76,5 +80,20 @@ public class User extends BaseInformation implements Wrappable {
         }
 
         return this;
+    }
+
+    @Override
+    public ContentValues toContentValues() {
+        ContentValues values = new ContentValues();
+
+        values.put(UserTable.ID, this.getId());
+        values.put(UserTable.NAME, this.getNameAndLastName());
+        values.put(UserTable.DNI, this.getDNI());
+        values.put(UserTable.EMAIL, this.getEmail());
+        values.put(UserTable.BORN_DATE, this.getBornDate());
+        values.put(UserTable.USERNAME, this.getUserName());
+        values.put(UserTable.PASSWORD, this.getPassword());
+
+        return values;
     }
 }

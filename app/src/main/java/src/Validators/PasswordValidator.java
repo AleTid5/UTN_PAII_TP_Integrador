@@ -11,8 +11,7 @@ public abstract class PasswordValidator {
 
     public static void validatePassword(String password) throws Exception {
         if (!VALID_PASSWORD_ADDRESS_REGEX.matcher(password).find()) {
-            throw new Exception("Debe ingresar una contraseña válida que contenga entre 8 y 20 caracteres, " +
-                    "1 número, 1 mayúscula, 1 minúscula y un simbolo especial");
+            throw new Exception("La contraseña debe contener 1 número, 1 mayúscula, 1 minúscula y un simbolo especial");
         }
     }
 

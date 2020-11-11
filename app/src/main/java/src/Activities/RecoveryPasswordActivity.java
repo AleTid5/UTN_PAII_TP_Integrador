@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.tp_cuatrimestral.R;
 
 import components.Snackbar.CustomSnackbar;
+import src.Activities.ui.setup_account.UserViewModel;
 import src.Services.Entities.PasswordRecoveryService;
 import src.Validators.NumberValidator;
 
@@ -24,9 +25,9 @@ public class RecoveryPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recovery_password);
 
-        UnauthorizedViewModel unauthorizedViewModel = new ViewModelProvider(this).get(UnauthorizedViewModel.class);
+        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
-        unauthorizedViewModel.getLiveUser().observe(this, user -> {
+        userViewModel.getLiveUser().observe(this, user -> {
             if (this.contextView == null) return;
 
             if (user == null) {

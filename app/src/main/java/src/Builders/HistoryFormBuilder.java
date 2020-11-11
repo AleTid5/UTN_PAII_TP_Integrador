@@ -3,7 +3,7 @@ package src.Builders;
 import android.widget.TextView;
 
 import src.Models.History;
-import src.Services.SessionService;
+import src.Services.Entities.UserSessionService;
 import src.Validators.DateValidator;
 import src.Validators.NumberValidator;
 
@@ -84,7 +84,7 @@ public class HistoryFormBuilder {
             throw new Exception("Debe completar al menos un campo del formulario");
         }
 
-        history.setUserId(SessionService.getUser().getId());
+        history.setUserId(UserSessionService.getUser().getId());
 
         return history;
     }

@@ -1,4 +1,4 @@
-package src.Database.Internal.Migrations;
+package src.Database.Migrations;
 
 import android.database.sqlite.SQLiteDatabase;
 
@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import src.Database.Internal.Tables.ContactPhonesTable;
+import src.Database.Tables.ContactPhonesTable;
 
 public abstract class ContactPhonesMigration {
     public static void execute(SQLiteDatabase sqLiteDatabase) {

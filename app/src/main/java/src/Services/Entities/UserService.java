@@ -8,9 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import src.Activities.UnauthorizedViewModel;
+import src.Activities.ui.setup_account.UserViewModel;
 import src.Models.User;
-import src.Services.SessionService;
 import src.Validators.PasswordValidator;
 
 public abstract class UserService {
@@ -41,13 +40,13 @@ public abstract class UserService {
 
                                 User user = new User().unwrap(map);
 
-                                SessionService.setUser(user);
-                                UnauthorizedViewModel.onUserChange(user);
+                                UserSessionService.setUser(user);
+                                UserViewModel.onUserChange(user);
                             } else {
-                                UnauthorizedViewModel.onUserChange(null);
+                                UserViewModel.onUserChange(null);
                             }
                         } else {
-                            UnauthorizedViewModel.onUserChange(null);
+                            UserViewModel.onUserChange(null);
                         }
                     });
         } catch (Exception ex){
@@ -66,17 +65,60 @@ public abstract class UserService {
                         List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
 
                         if (documentSnapshots.size() != 0) {
-                            UnauthorizedViewModel.onUserChange(null);
+                            UserViewModel.onUserChange(null);
                         } else {
                             db.collection("users")
                                     .add(user.wrap())
                                     .addOnFailureListener(Throwable::printStackTrace);
 
-                            UnauthorizedViewModel.onUserChange(user);
+                            UserViewModel.onUserChange(user);
                         }
                     } else {
-                        UnauthorizedViewModel.onUserChange(null);
+                        UserViewModel.onUserChange(null);
                     }
                 });
+    }
+
+    public static void updateUser(User user) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        if (UserSessionService.getUser().getEmail().equals(user.getEmail())) {
+            onUpdate(db, user);
+        } else {
+            checkUserEmailAndUpdate(db, user);
+        }
+    }
+
+    /**
+     * Valida que el email ingresado no pertenezca a otro usuario
+     * @param db
+     * @param user
+     */
+    private static void checkUserEmailAndUpdate(FirebaseFirestore db, User user) {
+        db.collection("users")
+                .whereEqualTo("email", user.getEmail())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
+
+                        if (documentSnapshots.size() != 0) {
+                            UserViewModel.onUserChange(null);
+                        } else {
+                            onUpdate(db, user);
+                        }
+                    } else {
+                        UserViewModel.onUserChange(null);
+                    }
+                });
+    }
+
+    private static void onUpdate(FirebaseFirestore db, User user) {
+        db.collection("users")
+                .document(user.getId())
+                .update(user.wrap());
+
+        UserSessionService.setUser(user);
+        UserViewModel.onUserChange(user);
     }
 }

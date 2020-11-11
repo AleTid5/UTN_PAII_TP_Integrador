@@ -3,7 +3,7 @@ package src.Builders;
 import android.widget.TextView;
 
 import src.Models.Alert;
-import src.Services.SessionService;
+import src.Services.Entities.UserSessionService;
 
 public class AlertBuilder {
     private static Alert alert;
@@ -59,7 +59,7 @@ public class AlertBuilder {
     }
 
     public Alert build() {
-        alert.setUserId(SessionService.getUser().getId());
+        alert.setUserId(UserSessionService.getUser().getId());
         return alert;
     }
 }

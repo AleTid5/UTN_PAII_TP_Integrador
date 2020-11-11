@@ -1,4 +1,4 @@
-package src.Activities;
+package src.Activities.ui.setup_account;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import src.Models.User;
 
-public class UnauthorizedViewModel extends ViewModel {
+public class UserViewModel extends ViewModel {
     protected static MutableLiveData<User> liveUser = new MutableLiveData<>();
 
     public LiveData<User> getLiveUser() {

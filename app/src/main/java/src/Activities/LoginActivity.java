@@ -14,8 +14,10 @@ import com.example.tp_cuatrimestral.R;
 import java.util.Objects;
 
 import components.Snackbar.CustomSnackbar;
+import src.Activities.ui.setup_account.UserViewModel;
 import src.Services.ContextManagerService;
 import src.Services.Entities.UserService;
+import src.Services.Entities.UserSessionService;
 import src.Validators.EmailValidator;
 
 public class LoginActivity extends AppCompatActivity {
@@ -27,9 +29,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ContextManagerService.setContext(this.getBaseContext());
         setContentView(R.layout.activity_login);
-        UnauthorizedViewModel unauthorizedViewModel = new ViewModelProvider(this).get(UnauthorizedViewModel.class);
+        checkUserIsLoggedIn();
+        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
-        unauthorizedViewModel.getLiveUser().observe(this, user -> {
+        userViewModel.getLiveUser().observe(this, user -> {
             if (this.contextView == null) return;
 
             if (user == null) {
@@ -79,5 +82,14 @@ public class LoginActivity extends AppCompatActivity {
         Button button = findViewById(R.id.button_login);
         button.setEnabled(true);
         button.setText("Iniciar sesión");
+    }
+
+    private void checkUserIsLoggedIn() {
+        try {
+            UserSessionService.getUser();
+            startActivity(new Intent(this, SystemActivity.class));
+        } catch (Exception ignored) {
+            System.out.println(ignored);
+        }
     }
 }
