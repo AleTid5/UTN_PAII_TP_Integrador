@@ -12,6 +12,7 @@ import java.util.Objects;
 import src.Activities.ui.blocked_users.BlockedUsersViewModel;
 import src.Activities.ui.setup_account.UserViewModel;
 import src.Models.User;
+import src.Services.Notifications.EmailSenderService;
 import src.Validators.PasswordValidator;
 
 public abstract class UserService {
@@ -98,6 +99,12 @@ public abstract class UserService {
                                 .addOnFailureListener(Throwable::printStackTrace);
 
                         UserViewModel.onUserChange(user);
+
+                        new EmailSenderService().sendMail(
+                                "Bienvenido a la plataforma de Obras en la calle",
+                                String.format("Hola %s, muchas gracias por suscribirse a obra en la calle.", user.getNameAndLastName()),
+                                user.getEmail()
+                        );
                     } catch(Exception e) {
                         UserViewModel.onUserChange(null);
                     }
