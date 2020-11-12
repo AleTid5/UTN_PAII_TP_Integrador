@@ -6,7 +6,9 @@ import android.app.Dialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewManager;
 import android.widget.BaseAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.tp_cuatrimestral.R;
@@ -21,9 +23,12 @@ import src.Services.Entities.UserSessionService;
 
 public class AlertAdapter extends BaseAdapter {
     private List<Alert> elements;
+    private ProgressBar progressBarRef;
+    private Boolean isLoading = true;
 
-    public AlertAdapter(List<Alert> elements) {
+    public AlertAdapter(List<Alert> elements, ProgressBar progressBarRef) {
         this.elements = getFilteredList(elements);
+        this.progressBarRef = progressBarRef;
     }
 
     @Override
@@ -63,14 +68,19 @@ public class AlertAdapter extends BaseAdapter {
         if (UserSessionService.getUser().getId().equals(alert.getUserId())) {
             ((ViewGroup) newView.findViewById(R.id.adapter_alert_layout)).removeView(newView.findViewById(R.id.link_block_user));
         } else {
-            ((View) newView.findViewById(R.id.link_block_user)).setOnClickListener(v -> {
-                new AlertDialog.Builder(v.getContext())
-                        .setTitle("¿Bloquear las alertas de éste usuario?")
-                        .setMessage(String.format("Desea bloquear las alertas del usuario \"%s\"", alert.getUserId()))
-                        .setPositiveButton("Aceptar", (dialog, which) -> HistoryAlertsViewModel.blockUser(alert.getUserId()))
-                        .setNegativeButton("Cancelar", null)
-                        .create().show();
-            });
+            ((View) newView.findViewById(R.id.link_block_user)).setOnClickListener(v -> new AlertDialog.Builder(v.getContext())
+                    .setTitle("¿Bloquear las alertas de éste usuario?")
+                    .setMessage("¿Desea bloquear al usuario que genera este tipo de alertas? (Recuerde que puede desbloquearlo desde el menú de configuración de cuenta)")
+                    .setPositiveButton("Aceptar", (dialog, which) -> HistoryAlertsViewModel.blockUser(alert.getUserId()))
+                    .setNegativeButton("Cancelar", null)
+                    .create().show());
+        }
+
+        if (this.isLoading) {
+            this.isLoading = false;
+            try {
+                ((ViewManager) this.progressBarRef.getParent()).removeView(this.progressBarRef);
+            } catch (Exception ignored) {}
         }
 
         return newView;

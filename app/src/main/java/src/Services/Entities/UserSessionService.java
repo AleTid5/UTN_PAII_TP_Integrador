@@ -23,6 +23,8 @@ public abstract class UserSessionService {
 
             new DatabaseManager().save(BlockedUsersTable.TABLE_NAME, values);
         });
+
+        UserSessionService.user = user;
     }
 
     public static User getUser() {

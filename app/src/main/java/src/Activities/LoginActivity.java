@@ -6,14 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tp_cuatrimestral.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Objects;
 
@@ -77,20 +73,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void blockButton() {
-        Button button = findViewById(R.id.button_login);
+        Button button = findViewById(R.id.button_unblock);
         button.setEnabled(false);
         button.setText("Iniciando sesión...");
     }
 
     private void unblockButton() {
-        Button button = findViewById(R.id.button_login);
+        Button button = findViewById(R.id.button_unblock);
         button.setEnabled(true);
         button.setText("Iniciar sesión");
     }
 
     private void checkUserIsLoggedIn() {
         try {
-            UserSessionService.getUser();
+            if (UserSessionService.getUser().getId() == null) throw new Exception();
             startActivity(new Intent(this, SystemActivity.class));
         } catch (Exception ignored) {
             System.out.println(ignored);

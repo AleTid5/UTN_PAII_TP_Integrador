@@ -42,20 +42,25 @@ public class SetupAccountFragment extends Fragment {
 
         ((TextView) content.findViewById(R.id.link_blocked_users)).setOnClickListener(view -> {
             mainContent.removeView(content);
+
             getChildFragmentManager()
                     .beginTransaction()
                     .replace(R.id.main_content, BlockedUsersFragment.newInstance())
                     .commit();
+
             ((TextView) root.findViewById(R.id.main_title)).setText("Desbloquear usuarios");
         });
 
         userViewModel.getLiveUser().observe(getViewLifecycleOwner(), user -> {
-            if (user == null) {
+            if (user == null) return;
+
+            if (user.getId() == null) {
                 new CustomSnackbar(requireView(), "Lo sentimos, el E-Mail ingresado ya pertenece a otro usuario").danger();
             } else {
                 new CustomSnackbar(requireView(), "¡El usuario ha sido modificado exitosamente!").success();
             }
 
+            UserViewModel.onUserChange(null);
             unblockButton(requireView());
         });
 

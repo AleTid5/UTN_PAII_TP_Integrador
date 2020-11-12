@@ -21,7 +21,7 @@ public abstract class PasswordRecoveryService {
                         if (task.isSuccessful()) {
                             List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
 
-                            if (documentSnapshots.size() > 0) {
+                            if (! documentSnapshots.isEmpty()) {
                                 Map<String,Object> map = documentSnapshots.get(0).getData();
                                 assert map != null;
 

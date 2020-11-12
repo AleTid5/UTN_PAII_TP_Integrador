@@ -18,7 +18,7 @@ public class ManageHistoryViewModel extends ViewModel {
 
     public ManageHistoryViewModel() {
         liveHistoryList.setValue(new ArrayList<>());
-        HistoryService.getHistoryList();
+        HistoryService.fetchHistoryList();
     }
 
     public LiveData<List<History>> getHistoryList() {

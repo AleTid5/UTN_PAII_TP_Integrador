@@ -41,7 +41,7 @@ public class HistoryFormFragment extends Fragment {
 
         ((TextView) root.findViewById(R.id.button_save)).setOnClickListener(v -> onSave());
 
-        ((TextView) root.findViewById(R.id.link_view_history))
+        ((TextView) root.findViewById(R.id.link_cancel))
                 .setOnClickListener(v -> SystemActivity.performClick(R.id.nav_manage_history));
 
         return root;

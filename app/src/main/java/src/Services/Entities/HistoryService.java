@@ -10,7 +10,7 @@ import src.Activities.ui.manage_history.ManageHistoryViewModel;
 import src.Models.History;
 
 public abstract class HistoryService {
-    public static void getHistoryList() {
+    public static void fetchHistoryList() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("historical_alerts").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

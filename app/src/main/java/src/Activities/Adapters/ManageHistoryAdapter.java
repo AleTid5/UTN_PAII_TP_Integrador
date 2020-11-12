@@ -81,7 +81,7 @@ public class ManageHistoryAdapter extends BaseAdapter {
 
         ((ImageView) newView.findViewById(R.id.link_observation_popup)).setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-            builder.setTitle("Title");
+            builder.setTitle(String.format("Observaciones del historial %s", i + 1));
 
             final EditText input = new EditText(v.getContext());
             input.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);

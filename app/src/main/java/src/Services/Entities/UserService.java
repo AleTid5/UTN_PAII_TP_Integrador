@@ -1,27 +1,49 @@
 package src.Services.Entities;
 
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import src.Activities.ui.manage_history.ManageHistoryViewModel;
+import src.Activities.ui.blocked_users.BlockedUsersViewModel;
 import src.Activities.ui.setup_account.UserViewModel;
-import src.Models.History;
 import src.Models.User;
 import src.Validators.PasswordValidator;
 
 public abstract class UserService {
-    public static List<User> getBlockedUserList() {
-        return new ArrayList<>();
-    }
+    public static void fetchBlockedUserList() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        List<String> blockedUsers = UserSessionService.getUser().getBlockedUsers();
 
-    public static User findUserById(Integer userId) {
-        return new User();
+        if (blockedUsers.isEmpty()) {
+            BlockedUsersViewModel.onAddBlockedUser(null);
+            return;
+        }
+
+        db.collection("users")
+                .whereIn(FieldPath.documentId(), blockedUsers)
+                .get()
+                .addOnCompleteListener(task -> {
+                    try {
+                        if (!task.isSuccessful()) throw new Exception();
+
+                        List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
+
+                        if (documentSnapshots.isEmpty()) throw new Exception();
+
+                        documentSnapshots.forEach(documentSnapshot -> {
+                            Map<String, Object> map = documentSnapshot.getData();
+                            map.put("id", documentSnapshot.getId());
+
+                            BlockedUsersViewModel.onAddBlockedUser(new User().unwrap(map));
+                        });
+
+                    } catch (Exception e) {}
+                });
     }
 
     public static void authenticateUser (String email, String password) throws Exception
@@ -36,7 +58,7 @@ public abstract class UserService {
                         if (task.isSuccessful()) {
                             List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
 
-                            if (documentSnapshots.size() == 1) {
+                            if (!documentSnapshots.isEmpty()) {
                                 Map<String,Object> map = documentSnapshots.get(0).getData();
                                 assert map != null;
                                 map.put("id", documentSnapshots.get(0).getId());
@@ -67,7 +89,7 @@ public abstract class UserService {
                     if (task.isSuccessful()) {
                         List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
 
-                        if (documentSnapshots.size() != 0) {
+                        if (!documentSnapshots.isEmpty()) {
                             UserViewModel.onUserChange(null);
                         } else {
                             db.collection("users")
@@ -102,16 +124,16 @@ public abstract class UserService {
                 .whereEqualTo("email", user.getEmail())
                 .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
+                    try {
+                        if (!task.isSuccessful()) throw new Exception();
+
                         List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
 
-                        if (documentSnapshots.size() != 0) {
-                            UserViewModel.onUserChange(null);
-                        } else {
-                            onUpdate(db, user);
-                        }
-                    } else {
-                        UserViewModel.onUserChange(null);
+                        if (!documentSnapshots.isEmpty()) throw new Exception();
+
+                        onUpdate(db, user);
+                    } catch (Exception e) {
+                        UserViewModel.onUserChange(new User());
                     }
                 });
     }

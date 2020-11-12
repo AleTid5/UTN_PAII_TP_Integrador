@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewManager;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -38,6 +39,11 @@ public class ManageHistoryFragment extends Fragment {
                 GridView gridView = requireView().findViewById(R.id.grid_view);
                 if (gridView != null) {
                     gridView.setAdapter(new ManageHistoryAdapter(stepList, manageHistoryViewModel));
+                }
+                if (! stepList.isEmpty()) {
+                    try {
+                        ((ViewManager) root.findViewById(R.id.loader).getParent()).removeView(root.findViewById(R.id.loader));
+                    } catch (Exception ignored) {}
                 }
             }
         });

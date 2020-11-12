@@ -19,7 +19,7 @@ public class HistoryAlertsViewModel extends ViewModel {
     public HistoryAlertsViewModel() {
         liveShowOwnAlerts.setValue(true);
         liveAlertList.setValue(new ArrayList<>());
-        AlertService.getAlertList();
+        AlertService.fetchAlertList();
     }
 
     public LiveData<List<Alert>> getAlertList() {

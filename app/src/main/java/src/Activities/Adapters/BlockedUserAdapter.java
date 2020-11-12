@@ -4,10 +4,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.tp_cuatrimestral.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import components.Accordion.AccordionView;
@@ -16,9 +18,11 @@ import src.Models.User;
 public class BlockedUserAdapter extends BaseAdapter {
     private List<User> elements;
     private static AccordionView accordionView;
+    private static List<String> selectedUsers;
 
     public BlockedUserAdapter(List<User> elements) {
         this.elements = elements;
+        selectedUsers = new ArrayList<>();
     }
 
     @Override
@@ -45,10 +49,25 @@ public class BlockedUserAdapter extends BaseAdapter {
             newView = inflater.inflate(R.layout.adapter_blocked_user,null);
         }
 
-        User step = getItem(i);
+        User user = getItem(i);
 
-        ((TextView) newView.findViewById(R.id.text_name)).setText("Usuario " + (i + 1));
+        ((TextView) newView.findViewById(R.id.text_name)).setText(user.getEmail());
+        ((CheckBox) newView.findViewById(R.id.checkBox)).setOnClickListener(v -> {
+            if (selectedUsers.contains(user.getId())) {
+                selectedUsers.remove(user.getId());
+            } else {
+                selectedUsers.add(user.getId());
+            }
+        });
 
         return newView;
+    }
+
+    public static List<String> getSelectedUsers() {
+        return selectedUsers;
+    }
+
+    public static void cleanSelectedUsers() {
+        selectedUsers = new ArrayList<>();
     }
 }

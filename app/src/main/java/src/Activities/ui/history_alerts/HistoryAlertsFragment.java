@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,16 +32,18 @@ public class HistoryAlertsFragment extends Fragment {
         historyAlertsViewModel = new ViewModelProvider(this).get(HistoryAlertsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_history_alerts, container, false);
 
+        ProgressBar progressBar = root.findViewById(R.id.loader);
+
         historyAlertsViewModel.getAlertList().observe(getViewLifecycleOwner(), alertList -> {
             if (alertList != null) {
                 GridView gridView = requireView().findViewById(R.id.grid_view);
-                gridView.setAdapter(new AlertAdapter(alertList));
+                gridView.setAdapter(new AlertAdapter(alertList, progressBar));
             }
         });
 
         HistoryAlertsViewModel.getOwnerStatusList().observe(getViewLifecycleOwner(), status -> {
             GridView gridView = requireView().findViewById(R.id.grid_view);
-            gridView.setAdapter(new AlertAdapter(historyAlertsViewModel.getAlertList().getValue()));
+            gridView.setAdapter(new AlertAdapter(historyAlertsViewModel.getAlertList().getValue(), progressBar));
         });
 
         ((TextView) root.findViewById(R.id.link_my_alerts)).setOnClickListener(v -> {
