@@ -86,19 +86,19 @@ public abstract class UserService {
                 .whereEqualTo("email", user.getEmail())
                 .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
+                    try {
+                        if (!task.isSuccessful()) throw new Exception();
+
                         List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
 
-                        if (!documentSnapshots.isEmpty()) {
-                            UserViewModel.onUserChange(null);
-                        } else {
-                            db.collection("users")
-                                    .add(user.wrap())
-                                    .addOnFailureListener(Throwable::printStackTrace);
+                        if (!documentSnapshots.isEmpty()) throw new Exception();
 
-                            UserViewModel.onUserChange(user);
-                        }
-                    } else {
+                        db.collection("users")
+                                .add(user.wrap())
+                                .addOnFailureListener(Throwable::printStackTrace);
+
+                        UserViewModel.onUserChange(user);
+                    } catch(Exception e) {
                         UserViewModel.onUserChange(null);
                     }
                 });
