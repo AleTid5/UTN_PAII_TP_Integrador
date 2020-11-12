@@ -1,11 +1,14 @@
 package src.Services.Entities;
 
+import com.google.common.collect.Lists;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -22,20 +25,21 @@ public abstract class AlertService {
                 db.collection("user_blocked_alerts")
                         .whereEqualTo("user_from", UserSessionService.getUser().getId())
                         .get().addOnCompleteListener(userBlockedTask -> {
-                            /*for (QueryDocumentSnapshot userBlockedDocument : Objects.requireNonNull(alertTask.getResult())) {
-                                for (QueryDocumentSnapshot userTask : Objects.requireNonNull(alertTask.getResult())) {
+                            List<String> blockedUsers = new ArrayList<>();
+
+                            for (QueryDocumentSnapshot userBlockedDocument : Objects.requireNonNull(userBlockedTask.getResult())) {
+                                blockedUsers.add((String) userBlockedDocument.getData().get("user_to"));
+                            }
+
+                            for (QueryDocumentSnapshot userTask : Objects.requireNonNull(alertTask.getResult())) {
+                                String userId = (String) userTask.getData().get("user_id");
+
+                                if (!blockedUsers.contains(userId)) {
                                     Map<String, Object> map = userTask.getData();
-                                    map.put("id", userTask.getId());
+                                    map.put("id", userId);
 
                                     HistoryAlertsViewModel.addAlert(new Alert().unwrap(map));
                                 }
-                            }*/
-
-                            for (QueryDocumentSnapshot userTask : Objects.requireNonNull(alertTask.getResult())) {
-                                Map<String, Object> map = userTask.getData();
-                                map.put("id", userTask.getId());
-
-                                HistoryAlertsViewModel.addAlert(new Alert().unwrap(map));
                             }
                         }
                 );

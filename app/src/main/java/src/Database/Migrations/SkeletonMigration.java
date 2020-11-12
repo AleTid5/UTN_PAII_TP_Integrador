@@ -2,6 +2,7 @@ package src.Database.Migrations;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import src.Database.Tables.BlockedUsersTable;
 import src.Database.Tables.ContactPhonesTable;
 import src.Database.Tables.ContactsTable;
 import src.Database.Tables.PhonesTable;
@@ -36,5 +37,10 @@ public abstract class SkeletonMigration {
                 + UserTable.BORN_DATE + " TEXT NOT NULL,"
                 + UserTable.USERNAME + " TEXT NOT NULL,"
                 + UserTable.PASSWORD + " TEXT NOT NULL)");
+
+        sqLiteDatabase.execSQL("CREATE TABLE " + BlockedUsersTable.TABLE_NAME + " ("
+                + BlockedUsersTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + BlockedUsersTable.USER_FROM + " TEXT NOT NULL,"
+                + BlockedUsersTable.USER_TO + " TEXT NOT NULL)");
     }
 }

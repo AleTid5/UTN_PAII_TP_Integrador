@@ -17,7 +17,7 @@ public abstract class PasswordValidator {
 
     public static String encrypt(String password) {
         try {
-            password = AESCrypt.encrypt(hasher, password);;
+            password = AESCrypt.encrypt(hasher, password);
         } catch (Exception ignored) {}
 
         return password;
@@ -25,7 +25,7 @@ public abstract class PasswordValidator {
 
     public static String decrypt(String password) {
         try {
-            password = AESCrypt.decrypt(hasher, password);;
+            password = AESCrypt.decrypt(hasher, password);
         } catch (Exception ignored) {}
 
         return password;

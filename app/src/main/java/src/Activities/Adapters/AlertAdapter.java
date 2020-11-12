@@ -66,7 +66,7 @@ public class AlertAdapter extends BaseAdapter {
             ((View) newView.findViewById(R.id.link_block_user)).setOnClickListener(v -> {
                 new AlertDialog.Builder(v.getContext())
                         .setTitle("¿Bloquear las alertas de éste usuario?")
-                        .setMessage("Una vez bloqueado, puede desbloquearlo desde el menú de configuraciones")
+                        .setMessage(String.format("Desea bloquear las alertas del usuario \"%s\"", alert.getUserId()))
                         .setPositiveButton("Aceptar", (dialog, which) -> HistoryAlertsViewModel.blockUser(alert.getUserId()))
                         .setNegativeButton("Cancelar", null)
                         .create().show();

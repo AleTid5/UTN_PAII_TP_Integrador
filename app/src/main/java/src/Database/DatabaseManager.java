@@ -1,5 +1,6 @@
 package src.Database;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -35,6 +36,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 tableName,
                 null,
                 entity.toContentValues());
+    }
+
+    public long save(String tableName, ContentValues contentValues) {
+        return this.getWritableDatabase().insert(
+                tableName,
+                null,
+                contentValues);
     }
 
     public Cursor find(String query) {

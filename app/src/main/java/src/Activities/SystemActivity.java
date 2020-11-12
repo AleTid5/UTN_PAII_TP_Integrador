@@ -17,6 +17,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.tp_cuatrimestral.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import src.Services.Entities.UserSessionService;
 
@@ -29,6 +30,7 @@ public class SystemActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseMessaging.getInstance().subscribeToTopic("alerts");
         setContentView(R.layout.activity_system);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

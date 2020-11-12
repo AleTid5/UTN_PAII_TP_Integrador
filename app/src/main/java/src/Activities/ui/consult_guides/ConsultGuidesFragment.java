@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import src.Activities.Adapters.ConsultGuideAdapter;
 import src.Activities.ui.frequent_questions.FrequentQuestionsFragment;
+import src.Services.Notifications.AlertNotificationService;
 
 public class ConsultGuidesFragment extends Fragment {
 
@@ -27,6 +28,8 @@ public class ConsultGuidesFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_main_layout, container, false);
 
         ((TextView) root.findViewById(R.id.main_title)).setText("Consultar guías");
+
+        AlertNotificationService.sendNotification("hola", "Todo bien?");
 
         FrameLayout mainContent = root.findViewById(R.id.main_content);
         View content = getLayoutInflater().inflate(R.layout.fragment_consult_guides, mainContent, false);

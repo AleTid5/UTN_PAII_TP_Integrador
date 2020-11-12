@@ -2,6 +2,8 @@ package src.Models;
 
 import android.content.ContentValues;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +18,7 @@ public class User extends BaseInformation implements Wrappable, Entity {
     private String email;
     private String userName;
     private String password;
-    private List<String> blockedUsers;
+    private List<String> blockedUsers = new ArrayList<>();
     private String createdDate;
 
     public String getEmail() {
@@ -43,9 +45,13 @@ public class User extends BaseInformation implements Wrappable, Entity {
         this.password = password;
     }
 
-    public List<String> getBlockedUsers() { return blockedUsers; }
+    public List<String> getBlockedUsers() {
+        return blockedUsers;
+    }
 
     public void setBlockedUsers(List<String> blockedUsers) { this.blockedUsers = blockedUsers;}
+
+    public void addBlockedUser(String blockedUser) { this.blockedUsers.add(blockedUser);}
 
     public String getCreatedDate() {
         return createdDate;
