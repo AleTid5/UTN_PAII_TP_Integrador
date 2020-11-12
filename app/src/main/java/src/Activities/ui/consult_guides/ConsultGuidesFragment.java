@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import src.Activities.Adapters.ConsultGuideAdapter;
 import src.Activities.ui.frequent_questions.FrequentQuestionsFragment;
+import src.Services.Notifications.EmailSenderService;
 
 public class ConsultGuidesFragment extends Fragment {
 

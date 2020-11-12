@@ -9,13 +9,15 @@ import java.util.Objects;
 
 import src.Activities.ui.setup_account.UserViewModel;
 import src.Models.User;
+import src.Services.Notifications.EmailSenderService;
+import src.Validators.PasswordValidator;
 
 public abstract class PasswordRecoveryService {
     public static void recoverPassword(Integer DNI) throws Exception {
         try {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("users")
-                    .whereEqualTo("dni",DNI)
+                    .whereEqualTo("dni", DNI)
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -29,7 +31,10 @@ public abstract class PasswordRecoveryService {
                                 user.setEmail((String) map.get("email"));
 
                                 UserViewModel.onUserChange(user);
-                                // ToDo: Send Email
+                                new EmailSenderService().sendMail(
+                                        String.format("La contaseña de su cuenta es: %s", PasswordValidator.decrypt((String) map.get("password"))),
+                                        user.getEmail()
+                                );
                             } else {
                                 UserViewModel.onUserChange(null);
                             }
