@@ -51,15 +51,15 @@ public class EmailSenderService extends Authenticator {
     }
 
     public void sendMail(String message, String emailTo) {
-        this.sendMail("Recupera tu contraseña 🕵️", message, "hola@obrasenlacalle.com", emailTo);
+        this.sendMail("Recupera tu contraseña 🕵️", message, emailTo);
     }
 
-    public void sendMail(String subject, String body, String sender, String emailTo) {
+    public void sendMail(String subject, String body, String emailTo) {
         Executors.newFixedThreadPool(1).submit(() -> {
             try {
                 MimeMessage message = new MimeMessage(session);
                 DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/plain"));
-                message.setSender(new InternetAddress(sender));
+                message.setSender(new InternetAddress("hola@obrasenlacalle.com"));
                 message.setSubject(subject);
                 message.setDataHandler(handler);
                 message.setRecipient(Message.RecipientType.TO, new InternetAddress(emailTo));

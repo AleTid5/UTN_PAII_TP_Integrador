@@ -12,18 +12,21 @@ import src.Models.History;
 public abstract class HistoryService {
     public static void fetchHistoryList() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("historical_alerts").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                    Map<String, Object> map = document.getData();
-                    map.put("id", document.getId());
+        db.collection("historical_alerts")
+                .whereEqualTo("user_id", UserSessionService.getUser().getId())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                            Map<String, Object> map = document.getData();
+                            map.put("id", document.getId());
 
-                    ManageHistoryViewModel.addProduct(new History().unwrap(map));
-                }
-            } else {
-                System.out.println("ERROR!");
-            }
-        });
+                            ManageHistoryViewModel.addProduct(new History().unwrap(map));
+                        }
+                    } else {
+                        System.out.println("ERROR!");
+                    }
+                });
     }
 
     public static void save(History history) {
