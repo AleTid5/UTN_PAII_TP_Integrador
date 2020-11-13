@@ -39,6 +39,15 @@ public class DashboardFragment extends Fragment {
                     dashboardViewModel.getLiveHistoryReportsTotal()
             ));
 
+            ProgressBar progressBar2 = root.findViewById(R.id.progressBar_new_alerts);
+            progressBar2.setIndeterminate(false);
+            progressBar2.setProgress(dashboardViewModel.getLiveAlertsTotal());
+            progressBar2.setMax(total);
+            ((TextView) root.findViewById(R.id.text_new_alerts)).setText(String.format(
+                    "Alertas totales (%s)",
+                    dashboardViewModel.getLiveAlertsTotal()
+            ));
+
         });
 
         return root;
