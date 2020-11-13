@@ -7,6 +7,8 @@ import java.util.concurrent.Executors;
 import src.Activities.ui.dashboard.DashboardViewModel;
 
 public abstract class DashboardService {
+    public static Boolean firstTime = true;
+
     public static void initializeDashboard() {
         Executors.newFixedThreadPool(1).submit(() -> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -15,7 +17,15 @@ public abstract class DashboardService {
                     .whereEqualTo("user_id", UserSessionService.getUser().getId())
                     .get()
                     .addOnSuccessListener(t -> {
+                        if (firstTime) {
+                            firstTime = false;
+                            initializeDashboard();
+                        }
+
                         final Integer historyAlertsCount = t.getDocuments().size();
+
+                        System.out.println("ALEE");
+                        System.out.println(historyAlertsCount);
                         db.collection("alerts")
                                 .get()
                                 .addOnSuccessListener(t2 -> {

@@ -16,6 +16,7 @@ import java.util.Objects;
 import components.Snackbar.CustomSnackbar;
 import src.Activities.ui.setup_account.UserViewModel;
 import src.Services.ContextManagerService;
+import src.Services.Entities.DashboardService;
 import src.Services.Entities.UserService;
 import src.Services.Entities.UserSessionService;
 import src.Validators.EmailValidator;
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ContextManagerService.setContext(this.getBaseContext());
+        DashboardService.firstTime = true;
         setContentView(R.layout.activity_login);
         checkUserIsLoggedIn();
         UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
