@@ -1,10 +1,10 @@
 package src.Services.Entities;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import src.Activities.ui.manage_history.ManageHistoryViewModel;
 import src.Models.History;
@@ -16,27 +16,32 @@ public abstract class HistoryService {
                 .whereEqualTo("user_id", UserSessionService.getUser().getId())
                 .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                            Map<String, Object> map = document.getData();
-                            map.put("id", document.getId());
+                    try {
+                        if (!task.isSuccessful()) throw new Exception();
 
-                            ManageHistoryViewModel.addProduct(new History().unwrap(map));
-                        }
-                    } else {
-                        System.out.println("ERROR!");
+                        List<DocumentSnapshot> documentSnapshots = task.getResult().getDocuments();
+
+                        if (documentSnapshots.isEmpty()) throw new Exception();
+
+                        documentSnapshots.forEach(documentSnapshot -> {
+                            Map<String, Object> map = documentSnapshot.getData();
+                            map.put("id", documentSnapshot.getId());
+
+                            ManageHistoryViewModel.addHistoryReport(new History().unwrap(map));
+                        });
+                    } catch (Exception e) {
+                        ManageHistoryViewModel.noFetchedReports();
                     }
                 });
     }
 
     public static void save(History history) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("historical_alerts")
+        FirebaseFirestore.getInstance()
+                .collection("historical_alerts")
                 .add(history.wrap())
                 .addOnFailureListener(Throwable::printStackTrace);
 
-        ManageHistoryViewModel.addProduct(history);
+        ManageHistoryViewModel.addHistoryReport(history);
     }
 
     public static void update(History history) {

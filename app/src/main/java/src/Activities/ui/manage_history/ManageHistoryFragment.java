@@ -1,13 +1,17 @@
 package src.Activities.ui.manage_history;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,20 +39,23 @@ public class ManageHistoryFragment extends Fragment {
         ManageHistoryTransporter.transport(root, content, getChildFragmentManager(), mainContent);
 
         manageHistoryViewModel.getHistoryList().observe(getViewLifecycleOwner(), stepList -> {
-            if (stepList != null) {
-                GridView gridView = requireView().findViewById(R.id.grid_view);
-                if (gridView != null) {
-                    gridView.setAdapter(new ManageHistoryAdapter(stepList, manageHistoryViewModel));
-                }
+            if (stepList == null) {
+                this.removeLoader(root);
+                this.addNoResultsLabel(root);
+                return;
+            }
+
+            GridView gridView = requireView().findViewById(R.id.grid_view);
+            if (gridView != null) {
+                gridView.setAdapter(new ManageHistoryAdapter(stepList, manageHistoryViewModel));
+
                 if (! stepList.isEmpty()) {
-                    try {
-                        ((ViewManager) root.findViewById(R.id.loader).getParent()).removeView(root.findViewById(R.id.loader));
-                    } catch (Exception ignored) {}
+                    this.removeLoader(root);
                 }
             }
         });
 
-        ((TextView) content.findViewById(R.id.link_add_history)).setOnClickListener(view -> {
+        content.findViewById(R.id.link_add_history).setOnClickListener(view -> {
             mainContent.removeView(content);
 
             getChildFragmentManager()
@@ -66,5 +73,15 @@ public class ManageHistoryFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         manageHistoryViewModel = new ViewModelProvider(this).get(ManageHistoryViewModel.class);
+    }
+
+    private void removeLoader(View root) {
+        try {
+            ((ViewManager) root.findViewById(R.id.loader).getParent()).removeView(root.findViewById(R.id.loader));
+        } catch (Exception ignored) {}
+    }
+
+    private void addNoResultsLabel(View root) {
+        root.findViewById(R.id.text_no_results).setVisibility(View.VISIBLE);
     }
 }

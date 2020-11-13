@@ -40,6 +40,10 @@ public class History extends BaseInformation implements Wrappable {
         return createdDate;
     }
 
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
     @Override
     public Map<String, Object> wrap() {
         Map<String, Object> map = new HashMap<>();

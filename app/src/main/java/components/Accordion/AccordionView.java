@@ -152,11 +152,11 @@ public class AccordionView extends RelativeLayout {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout accordionLayout = (LinearLayout) inflater.inflate(R.layout.component_accordion, null);
         partition = accordionLayout.findViewById(R.id.partition);
-        heading = (TextView) accordionLayout.findViewById(R.id.heading);
-        paragraph = (RelativeLayout) accordionLayout.findViewById(R.id.paragraph_layout);
-        dropdownImage = (ImageView) accordionLayout.findViewById(R.id.dropdown_image);
-        dropupImage = (ImageView) accordionLayout.findViewById(R.id.dropup_image);
-        headingLayout = (LinearLayout) accordionLayout.findViewById(R.id.heading_layout);
+        heading = accordionLayout.findViewById(R.id.heading);
+        paragraph = accordionLayout.findViewById(R.id.paragraph_layout);
+        dropdownImage = accordionLayout.findViewById(R.id.dropdown_image);
+        dropupImage = accordionLayout.findViewById(R.id.dropup_image);
+        headingLayout = accordionLayout.findViewById(R.id.heading_layout);
         paragraph.removeAllViews();
 
         int i;

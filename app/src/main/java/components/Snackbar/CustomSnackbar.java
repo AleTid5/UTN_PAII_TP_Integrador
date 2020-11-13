@@ -15,7 +15,7 @@ public class CustomSnackbar {
         this.snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
         this.snackbar.setDuration(4000);
         this.snackBarView = this.snackbar.getView();
-        TextView textView = (TextView) this.snackBarView.findViewById(com.google.android.material.R.id.snackbar_text);
+        TextView textView = this.snackBarView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
     }
 

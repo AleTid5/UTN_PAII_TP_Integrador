@@ -17,7 +17,7 @@ public class HistoryAlertsViewModel extends ViewModel {
     private static MutableLiveData<Boolean> liveShowOwnAlerts = new MutableLiveData<>(true);
 
     public HistoryAlertsViewModel() {
-        liveShowOwnAlerts.setValue(true);
+        liveShowOwnAlerts.setValue(false);
         liveAlertList.setValue(new ArrayList<>());
         AlertService.fetchAlertList();
     }

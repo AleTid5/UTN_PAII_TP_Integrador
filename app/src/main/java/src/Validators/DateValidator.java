@@ -8,20 +8,8 @@ import java.util.Objects;
 
 public abstract class DateValidator {
 
-    public static String validateDate(String dateToValidate) throws Exception {
-        dateCannotBeNull(dateToValidate);
-
-        try {
-            Objects.requireNonNull(
-                    new SimpleDateFormat("dd/MM/yyyy", new Locale("es", "ES"))
-                            .parse(dateToValidate)
-            );
-        } catch (ParseException e) {
-            throw new Exception("La fecha ingresada es incorrecta. Recuerde que el formato debe ser dd/mm/aaaa, ej: 25/05/1981");
-        }
-
-
-        return dateToValidate;
+    public static String getThisMomentAsDate() {
+        return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", new Locale("es", "ES")).format(new Date());
     }
 
     public static String validateDateNotGreaterThanToday(String dateToValidate) throws Exception {

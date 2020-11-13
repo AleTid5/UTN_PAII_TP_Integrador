@@ -46,13 +46,13 @@ public class HistoryAlertsFragment extends Fragment {
             gridView.setAdapter(new AlertAdapter(historyAlertsViewModel.getAlertList().getValue(), progressBar));
         });
 
-        ((TextView) root.findViewById(R.id.link_my_alerts)).setOnClickListener(v -> {
+        root.findViewById(R.id.link_my_alerts).setOnClickListener(v -> {
             ((TextView) root.findViewById(R.id.link_other_alerts)).setTypeface(null, Typeface.NORMAL);
             ((TextView) root.findViewById(R.id.link_my_alerts)).setTypeface(null, Typeface.BOLD);
             historyAlertsViewModel.toggleOwnerVisibilityAlerts(true);
         });
 
-        ((TextView) root.findViewById(R.id.link_other_alerts)).setOnClickListener(v -> {
+        root.findViewById(R.id.link_other_alerts).setOnClickListener(v -> {
             ((TextView) root.findViewById(R.id.link_other_alerts)).setTypeface(null, Typeface.BOLD);
             ((TextView) root.findViewById(R.id.link_my_alerts)).setTypeface(null, Typeface.NORMAL);
             historyAlertsViewModel.toggleOwnerVisibilityAlerts(false);

@@ -1,40 +1,45 @@
 package src.Services.Entities;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
 import src.Activities.ui.history_alerts.HistoryAlertsViewModel;
 import src.Models.Alert;
 import src.Services.Notifications.AlertNotificationService;
+import src.Validators.DateValidator;
 
 public abstract class AlertService {
     public static void fetchAlertList() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("alerts").get().addOnCompleteListener(alertTask -> {
-            if (alertTask.isSuccessful()) {
-                List<String> blockedUsers = UserSessionService.getUser().getBlockedUsers();
+            try {
+                if (!alertTask.isSuccessful()) throw new Exception();
 
-                for (QueryDocumentSnapshot userTask : Objects.requireNonNull(alertTask.getResult())) {
-                    String userId = (String) userTask.getData().get("user_id");
+                List<DocumentSnapshot> documentSnapshots = alertTask.getResult().getDocuments();
+
+                if (documentSnapshots.isEmpty()) throw new Exception();
+
+                final List<String> blockedUsers = UserSessionService.getUser().getBlockedUsers();
+
+                documentSnapshots.forEach(documentSnapshot -> {
+                    String userId = (String) documentSnapshot.getData().get("user_id");
 
                     if (!blockedUsers.contains(userId)) {
-                        Map<String, Object> map = userTask.getData();
+                        Map<String, Object> map = documentSnapshot.getData();
                         map.put("id", userId);
 
                         HistoryAlertsViewModel.addAlert(new Alert().unwrap(map));
                     }
-                }
-            } else {
-                System.out.println("ERROR!");
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -53,7 +58,7 @@ public abstract class AlertService {
 
         map.put("user_from", UserSessionService.getUser().getId());
         map.put("user_to", userId);
-        map.put("block_date", new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", new Locale("es", "ES")).format(new Date()));
+        map.put("block_date", DateValidator.getThisMomentAsDate());
 
         FirebaseFirestore.getInstance()
                 .collection("user_blocked_alerts")

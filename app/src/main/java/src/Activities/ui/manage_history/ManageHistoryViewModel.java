@@ -34,10 +34,20 @@ public class ManageHistoryViewModel extends ViewModel {
         liveHistoryList.postValue(productList);
     }
 
-    public static void addProduct(History history) {
+    public static void addHistoryReport(History history) {
         try {
+            if (liveHistoryList.getValue() == null) {
+                liveHistoryList.setValue(new ArrayList<>());
+            }
+
             Objects.requireNonNull(liveHistoryList.getValue()).add(history);
             liveHistoryList.postValue(liveHistoryList.getValue());
+        } catch (Exception ignored) {}
+    }
+
+    public static void noFetchedReports() {
+        try {
+            liveHistoryList.postValue(null);
         } catch (Exception ignored) {}
     }
 

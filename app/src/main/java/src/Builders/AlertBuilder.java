@@ -4,6 +4,7 @@ import android.widget.TextView;
 
 import src.Models.Alert;
 import src.Services.Entities.UserSessionService;
+import src.Validators.DateValidator;
 
 public class AlertBuilder {
     private static Alert alert;
@@ -60,6 +61,8 @@ public class AlertBuilder {
 
     public Alert build() {
         alert.setUserId(UserSessionService.getUser().getId());
+        alert.setCreatedDate(DateValidator.getThisMomentAsDate());
+
         return alert;
     }
 }

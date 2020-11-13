@@ -18,11 +18,9 @@ import src.Activities.Adapters.ConsultContactAdapter;
 
 public class ConsultContactsFragment extends Fragment {
 
-    private ConsultContactsViewModel consultContactsViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        consultContactsViewModel = new ViewModelProvider(this).get(ConsultContactsViewModel.class);
+        ConsultContactsViewModel consultContactsViewModel = new ViewModelProvider(this).get(ConsultContactsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_main_layout, container, false);
 
         ((TextView) root.findViewById(R.id.main_title)).setText("Consultar contactos");

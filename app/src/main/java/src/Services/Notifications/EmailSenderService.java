@@ -19,10 +19,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class EmailSenderService extends Authenticator {
-    private String mailhost = "smtp.gmail.com";
-    private String user;
-    private String password;
-    private Session session;
+    private final String user;
+    private final String password;
+    private final Session session;
 
     static {
         Security.addProvider(new JSSEProvider());
@@ -34,6 +33,7 @@ public class EmailSenderService extends Authenticator {
 
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
+        String mailhost = "smtp.gmail.com";
         props.setProperty("mail.host", mailhost);
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");

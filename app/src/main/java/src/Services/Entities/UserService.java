@@ -3,14 +3,15 @@ package src.Services.Entities;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import src.Activities.StatusViewModel;
 import src.Activities.ui.blocked_users.BlockedUsersViewModel;
 import src.Activities.ui.setup_account.UserViewModel;
+import src.Enums.StatusEnum;
 import src.Models.User;
 import src.Services.Notifications.EmailSenderService;
 import src.Validators.PasswordValidator;
@@ -83,6 +84,40 @@ public abstract class UserService {
     public static void registerUser(User user) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        checkUserEmailAndDNIThenExecute(db, user, () -> db.collection("users")
+                .add(user.wrap())
+                .addOnFailureListener(t -> StatusViewModel.onStatusChange(StatusEnum.TRANSACTION_FAILED))
+                .addOnSuccessListener(t -> {
+                    StatusViewModel.onStatusChange(StatusEnum.TRANSACTION_OK);
+
+                    /*new EmailSenderService().sendMail(
+                            "Bienvenido a la plataforma de Obras en la calle",
+                            String.format("Hola %s, muchas gracias por suscribirse a \"Obras en la calle\".", user.getNameAndLastName()),
+                            user.getEmail()
+                    );*/
+                }));
+    }
+
+    public static void updateUser(User user) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        if (UserSessionService.getUser().getEmail().equals(user.getEmail()) && UserSessionService.getUser().getDNI().equals(user.getDNI())) {
+            onUpdate(db, user);
+        } else if (!UserSessionService.getUser().getEmail().equals(user.getEmail()) && !UserSessionService.getUser().getDNI().equals(user.getDNI())) {
+            checkUserEmailAndDNIThenExecute(db, user, () -> onUpdate(db, user));
+        } else if (!UserSessionService.getUser().getEmail().equals(user.getEmail())) {
+            checkUserEmailThenUpdate(db, user);
+        } else {
+            checkUserDNIThenUpdate(db, user);
+        }
+    }
+
+    /**
+     * Valida que el email ingresado no pertenezca a otro usuario
+     * @param db
+     * @param user
+     */
+    private static void checkUserEmailAndDNIThenExecute(FirebaseFirestore db, final User user, Runnable runnable) {
         db.collection("users")
                 .whereEqualTo("email", user.getEmail())
                 .get()
@@ -95,30 +130,25 @@ public abstract class UserService {
                         if (!documentSnapshots.isEmpty()) throw new Exception();
 
                         db.collection("users")
-                                .add(user.wrap())
-                                .addOnFailureListener(Throwable::printStackTrace);
+                                .whereEqualTo("dni", user.getDNI())
+                                .get()
+                                .addOnCompleteListener(task2 -> {
+                                    try {
+                                        if (!task2.isSuccessful()) throw new Exception();
 
-                        UserViewModel.onUserChange(user);
+                                        List<DocumentSnapshot> documentSnapshots2 = Objects.requireNonNull(task2.getResult()).getDocuments();
 
-                        new EmailSenderService().sendMail(
-                                "Bienvenido a la plataforma de Obras en la calle",
-                                String.format("Hola %s, muchas gracias por suscribirse a obra en la calle.", user.getNameAndLastName()),
-                                user.getEmail()
-                        );
-                    } catch(Exception e) {
-                        UserViewModel.onUserChange(null);
+                                        if (!documentSnapshots2.isEmpty()) throw new Exception();
+
+                                        runnable.run();
+                                    } catch (Exception e) {
+                                        StatusViewModel.onStatusChange(StatusEnum.DUPLICATED_DNI);
+                                    }
+                                });
+                    } catch (Exception e) {
+                        StatusViewModel.onStatusChange(StatusEnum.DUPLICATED_EMAIL);
                     }
                 });
-    }
-
-    public static void updateUser(User user) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        if (UserSessionService.getUser().getEmail().equals(user.getEmail())) {
-            onUpdate(db, user);
-        } else {
-            checkUserEmailAndUpdate(db, user);
-        }
     }
 
     /**
@@ -126,7 +156,7 @@ public abstract class UserService {
      * @param db
      * @param user
      */
-    private static void checkUserEmailAndUpdate(FirebaseFirestore db, User user) {
+    private static void checkUserEmailThenUpdate(FirebaseFirestore db, User user) {
         db.collection("users")
                 .whereEqualTo("email", user.getEmail())
                 .get()
@@ -140,7 +170,31 @@ public abstract class UserService {
 
                         onUpdate(db, user);
                     } catch (Exception e) {
-                        UserViewModel.onUserChange(new User());
+                        StatusViewModel.onStatusChange(StatusEnum.DUPLICATED_EMAIL);
+                    }
+                });
+    }
+
+    /**
+     * Valida que el DNI ingresado no pertenezca a otro usuario
+     * @param db
+     * @param user
+     */
+    private static void checkUserDNIThenUpdate(FirebaseFirestore db, User user) {
+        db.collection("users")
+                .whereEqualTo("dni", user.getDNI())
+                .get()
+                .addOnCompleteListener(task -> {
+                    try {
+                        if (!task.isSuccessful()) throw new Exception();
+
+                        List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
+
+                        if (!documentSnapshots.isEmpty()) throw new Exception();
+
+                        onUpdate(db, user);
+                    } catch (Exception e) {
+                        StatusViewModel.onStatusChange(StatusEnum.DUPLICATED_DNI);
                     }
                 });
     }
@@ -148,10 +202,12 @@ public abstract class UserService {
     private static void onUpdate(FirebaseFirestore db, User user) {
         db.collection("users")
                 .document(user.getId())
-                .update(user.wrap());
-
-        UserSessionService.setUser(user);
-        UserViewModel.onUserChange(user);
+                .update(user.wrap())
+                .addOnFailureListener(t -> StatusViewModel.onStatusChange(StatusEnum.TRANSACTION_FAILED))
+                .addOnSuccessListener(t -> {
+                    UserSessionService.setUser(user);
+                    StatusViewModel.onStatusChange(StatusEnum.TRANSACTION_OK);
+                });
     }
 
     private static void fillUserData(User user) {
@@ -163,10 +219,8 @@ public abstract class UserService {
                     try {
                         if (!task.isSuccessful()) throw new Exception();
 
-                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                            Map<String, Object> map = document.getData();
-                            user.addBlockedUser((String) map.get("user_to"));
-                        }
+                        task.getResult().getDocuments().forEach(documentSnapshot ->
+                                user.addBlockedUser((String) documentSnapshot.getData().get("user_to")));
                     } catch (Exception ignored) {
                     } finally {
                         UserSessionService.setUser(user);

@@ -56,7 +56,7 @@ public class AlertAdapter extends BaseAdapter {
 
         ((TextView) newView.findViewById(R.id.text_name)).setText(String.format("Alerta %s", i + 1));
 
-        ((View) newView.findViewById(R.id.link_view_alert)).setOnClickListener(v -> {
+        newView.findViewById(R.id.link_view_alert).setOnClickListener(v -> {
             Dialog dialog = new Dialog(newView.getContext());
             dialog.setContentView(R.layout.dialog_alert);
             dialog.setCancelable(false);

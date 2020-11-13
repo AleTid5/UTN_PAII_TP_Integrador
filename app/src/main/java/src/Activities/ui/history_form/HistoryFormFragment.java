@@ -20,6 +20,7 @@ import src.Activities.SystemActivity;
 import src.Builders.HistoryFormBuilder;
 import src.Models.History;
 import src.Services.Entities.HistoryService;
+import src.Validators.DateValidator;
 import src.Validators.NumberValidator;
 
 public class HistoryFormFragment extends Fragment {
@@ -58,6 +59,7 @@ public class HistoryFormFragment extends Fragment {
                     .build();
 
             if (HistoryFormFragment.history == null) {
+                history.setCreatedDate(DateValidator.getThisMomentAsDate());
                 HistoryService.save(history);
             } else {
                 history.setId(HistoryFormFragment.history.getId());

@@ -1,6 +1,6 @@
 package components.Accordion;
 
 public interface AccordionExpansionCollapseListener {
-    public void onExpanded(AccordionView view);
-    public void onCollapsed(AccordionView view);
+    void onExpanded(AccordionView view);
+    void onCollapsed(AccordionView view);
 }

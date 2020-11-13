@@ -51,7 +51,11 @@ public class UserBuilder {
         String userName = textUserName.getText().toString().trim();
 
         if (userName.length() < 5) {
-            throw new Exception("El Nombre de Usuario no puede ser menor a 5 caracteres");
+            throw new Exception("El nombre de usuario no puede ser menor a 5 caracteres");
+        }
+
+        if (userName.contains(" ")) {
+            throw new Exception("El nombre de usuario no puede contener espacios");
         }
 
         user.setUserName(userName);

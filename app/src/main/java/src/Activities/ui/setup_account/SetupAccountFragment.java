@@ -17,8 +17,10 @@ import com.example.tp_cuatrimestral.R;
 import java.util.Objects;
 
 import components.Snackbar.CustomSnackbar;
+import src.Activities.StatusViewModel;
 import src.Activities.ui.blocked_users.BlockedUsersFragment;
 import src.Builders.UserBuilder;
+import src.Enums.StatusEnum;
 import src.Models.User;
 import src.Services.Entities.UserService;
 import src.Services.Entities.UserSessionService;
@@ -28,7 +30,7 @@ public class SetupAccountFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        StatusViewModel statusViewModel = new ViewModelProvider(this).get(StatusViewModel.class);
         View root = inflater.inflate(R.layout.fragment_main_layout, container, false);
 
         ((TextView) root.findViewById(R.id.main_title)).setText("Configuración de cuenta");
@@ -38,9 +40,9 @@ public class SetupAccountFragment extends Fragment {
         fillForm(content);
         mainContent.addView(content);
 
-        ((Button) content.findViewById(R.id.button_save)).setOnClickListener(this::onSave);
+        content.findViewById(R.id.button_save).setOnClickListener(this::onSave);
 
-        ((TextView) content.findViewById(R.id.link_blocked_users)).setOnClickListener(view -> {
+        content.findViewById(R.id.link_blocked_users).setOnClickListener(view -> {
             mainContent.removeView(content);
 
             getChildFragmentManager()
@@ -51,16 +53,19 @@ public class SetupAccountFragment extends Fragment {
             ((TextView) root.findViewById(R.id.main_title)).setText("Desbloquear usuarios");
         });
 
-        userViewModel.getLiveUser().observe(getViewLifecycleOwner(), user -> {
-            if (user == null) return;
+        statusViewModel.getLiveStatus().observe(getViewLifecycleOwner(), status -> {
+            if (status == null || StatusEnum.NO_ACTION.equals(status)) return;
 
-            if (user.getId() == null) {
+            if (StatusEnum.DUPLICATED_EMAIL.equals(status)) {
                 new CustomSnackbar(requireView(), "Lo sentimos, el E-Mail ingresado ya pertenece a otro usuario").danger();
+            } else if (StatusEnum.DUPLICATED_DNI.equals(status)) {
+                new CustomSnackbar(requireView(), "Lo sentimos, el DNI ingresado pertenece a otro usuario").danger();
+            }  else if (StatusEnum.TRANSACTION_FAILED.equals(status)) {
+                new CustomSnackbar(requireView(), "Lo sentimos, hubo un problema al intentar actualizar. Intente nuevamente.").danger();
             } else {
-                new CustomSnackbar(requireView(), "¡El usuario ha sido modificado exitosamente!").success();
+                new CustomSnackbar(requireView(), "¡Sus datos han sido modificados exitosamente!").success();
             }
 
-            UserViewModel.onUserChange(null);
             unblockButton(requireView());
         });
 
