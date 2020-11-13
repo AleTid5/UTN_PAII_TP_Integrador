@@ -54,8 +54,6 @@ public class AlertAdapter extends BaseAdapter {
 
         Alert alert = getItem(i);
 
-        ((TextView) newView.findViewById(R.id.text_name)).setText(String.format("Alerta %s", i + 1));
-
         newView.findViewById(R.id.link_view_alert).setOnClickListener(v -> {
             Dialog dialog = new Dialog(newView.getContext());
             dialog.setContentView(R.layout.dialog_alert);
@@ -65,13 +63,15 @@ public class AlertAdapter extends BaseAdapter {
             dialog.show();
         });
 
-        if (UserSessionService.getUser().getId().equals(alert.getUserId())) {
+        if (UserSessionService.getUser().getId().equals(alert.getUser().getId())) {
+            ((TextView) newView.findViewById(R.id.text_name)).setText(String.format("Alerta %s", i + 1));
             ((ViewGroup) newView.findViewById(R.id.adapter_alert_layout)).removeView(newView.findViewById(R.id.link_block_user));
         } else {
-            ((View) newView.findViewById(R.id.link_block_user)).setOnClickListener(v -> new AlertDialog.Builder(v.getContext())
+            ((TextView) newView.findViewById(R.id.text_name)).setText(String.format("Alerta %s | %s", i + 1, alert.getUser().getEmail()));
+            newView.findViewById(R.id.link_block_user).setOnClickListener(v -> new AlertDialog.Builder(v.getContext())
                     .setTitle("¿Bloquear las alertas de éste usuario?")
                     .setMessage("¿Desea bloquear al usuario que genera este tipo de alertas? (Recuerde que puede desbloquearlo desde el menú de configuración de cuenta)")
-                    .setPositiveButton("Aceptar", (dialog, which) -> HistoryAlertsViewModel.blockUser(alert.getUserId()))
+                    .setPositiveButton("Aceptar", (dialog, which) -> HistoryAlertsViewModel.blockUser(alert.getUser().getId()))
                     .setNegativeButton("Cancelar", null)
                     .create().show());
         }
@@ -89,12 +89,16 @@ public class AlertAdapter extends BaseAdapter {
     private List<Alert> getFilteredList(List<Alert> elements) {
         return Objects.requireNonNull(elements)
                 .stream()
-                .filter(p -> HistoryAlertsViewModel.getOwnerStatusList().getValue() == p.getUserId().equals(UserSessionService.getUser().getId()))
+                .filter(alert -> HistoryAlertsViewModel.getOwnerStatusList().getValue() == alert.getUser().getId().equals(UserSessionService.getUser().getId()))
                 .collect(Collectors.toList());
     }
 
     private void fillPopup(Dialog dialog, Alert alert, Integer viewIndex) {
+        if (UserSessionService.getUser().getId().equals(alert.getUser().getId())) {
         ((TextView) dialog.findViewById(R.id.dialog_alert_title)).setText(String.format("Alerta %s", viewIndex + 1));
+        } else {
+        ((TextView) dialog.findViewById(R.id.dialog_alert_title)).setText(String.format("Alerta %s\n%s", viewIndex + 1, alert.getUser().getEmail()));
+        }
 
         try {
             if (alert.getNameAndLastName().length() == 0) throw new Exception();

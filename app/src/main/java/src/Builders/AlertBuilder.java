@@ -3,6 +3,7 @@ package src.Builders;
 import android.widget.TextView;
 
 import src.Models.Alert;
+import src.Models.User;
 import src.Services.Entities.UserSessionService;
 import src.Validators.DateValidator;
 
@@ -60,7 +61,10 @@ public class AlertBuilder {
     }
 
     public Alert build() {
-        alert.setUserId(UserSessionService.getUser().getId());
+        User generatorUser = new User();
+        generatorUser.setId(UserSessionService.getUser().getId());
+        generatorUser.setEmail(UserSessionService.getUser().getEmail());
+        alert.setUser(generatorUser);
         alert.setCreatedDate(DateValidator.getThisMomentAsDate());
 
         return alert;

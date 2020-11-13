@@ -47,7 +47,7 @@ public class HistoryAlertsViewModel extends ViewModel {
         AlertService.blockUser(userId);
         List<Alert> alertList = Objects.requireNonNull(liveAlertList.getValue())
                 .stream()
-                .filter(p -> !p.getUserId().equals(userId))
+                .filter(alert -> !alert.getUser().getId().equals(userId))
                 .collect(Collectors.toList());
         liveAlertList.postValue(alertList);
     }

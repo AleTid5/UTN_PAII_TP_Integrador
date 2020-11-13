@@ -11,7 +11,7 @@ public class Alert implements Wrappable {
     private String place;
     private String contact;
     private String observations;
-    private String userId;
+    private User user;
     private String createdDate;
 
     public String getId() {
@@ -54,12 +54,12 @@ public class Alert implements Wrappable {
         this.observations = observations;
     }
 
-    public String getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getCreatedDate() {
@@ -78,7 +78,8 @@ public class Alert implements Wrappable {
         map.put("place", this.getPlace());
         map.put("contact", this.getContact());
         map.put("observation", this.getObservations());
-        map.put("user_id", this.getUserId());
+        map.put("user_id", this.getUser().getId());
+        map.put("user_email", this.getUser().getEmail());
         map.put("created_date", this.getCreatedDate());
 
         return map;
@@ -91,8 +92,10 @@ public class Alert implements Wrappable {
         this.setPlace((String) map.get("place"));
         this.setContact((String) map.get("contact"));
         this.setObservations((String) map.get("observation"));
-        this.setUserId((String) map.get("user_id"));
         this.createdDate = (String) map.get("created_date");
+        this.user = new User();
+        this.user.setId((String) map.get("user_id"));
+        this.user.setEmail((String) map.get("user_email"));
 
         return this;
     }
