@@ -48,6 +48,14 @@ public class DashboardFragment extends Fragment {
                     dashboardViewModel.getLiveAlertsTotal()
             ));
 
+            ProgressBar progressBar3 = root.findViewById(R.id.progressBar_blocked_users);
+            progressBar3.setIndeterminate(false);
+            progressBar3.setProgress(dashboardViewModel.getLiveBlockedUsersTotal());
+            progressBar3.setMax(total);
+            ((TextView) root.findViewById(R.id.text_blocked_users)).setText(String.format(
+                    "Usuarios bloqueados (%s)",
+                    dashboardViewModel.getLiveBlockedUsersTotal()
+            ));
         });
 
         return root;
