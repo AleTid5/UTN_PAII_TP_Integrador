@@ -40,10 +40,9 @@ public class HistoryFormFragment extends Fragment {
 
         this.fillForm(root);
 
-        ((TextView) root.findViewById(R.id.button_save)).setOnClickListener(v -> onSave());
+        (root.findViewById(R.id.button_save)).setOnClickListener(v -> onSave());
 
-        ((TextView) root.findViewById(R.id.link_cancel))
-                .setOnClickListener(v -> SystemActivity.performClick(R.id.nav_manage_history));
+        (root.findViewById(R.id.link_cancel)).setOnClickListener(v -> SystemActivity.performClick(R.id.nav_manage_history));
 
         return root;
     }
@@ -51,11 +50,11 @@ public class HistoryFormFragment extends Fragment {
     private void onSave() {
         try {
             History history = new HistoryFormBuilder()
-                    .setNameAndLastName((TextView) requireView().findViewById(R.id.input_name))
-                    .setDNI((TextView) requireView().findViewById(R.id.input_dni))
-                    .setBornDate((TextView) requireView().findViewById(R.id.input_born_date))
-                    .setPhoneNumber((TextView) requireView().findViewById(R.id.input_phone))
-                    .setObservations((TextView) requireView().findViewById(R.id.input_observations))
+                    .setNameAndLastName(requireView().findViewById(R.id.input_name))
+                    .setDNI(requireView().findViewById(R.id.input_dni))
+                    .setBornDate(requireView().findViewById(R.id.input_born_date))
+                    .setPhoneNumber(requireView().findViewById(R.id.input_phone))
+                    .setObservations(requireView().findViewById(R.id.input_observations))
                     .build();
 
             if (HistoryFormFragment.history == null) {
@@ -66,6 +65,7 @@ public class HistoryFormFragment extends Fragment {
                 HistoryService.update(history);
             }
 
+            SystemActivity.performClick(R.id.nav_manage_history);
             new CustomSnackbar(requireView(), "¡La operación ha sido exitosa!").success();
             SystemActivity.performClick(R.id.nav_manage_history);
         } catch (Exception e) {

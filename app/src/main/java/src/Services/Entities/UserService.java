@@ -90,11 +90,11 @@ public abstract class UserService {
                 .addOnSuccessListener(t -> {
                     StatusViewModel.onStatusChange(StatusEnum.TRANSACTION_OK);
 
-                    /*new EmailSenderService().sendMail(
+                    new EmailSenderService().sendMail(
                             "Bienvenido a la plataforma de Obras en la calle",
                             String.format("Hola %s, muchas gracias por suscribirse a \"Obras en la calle\".", user.getNameAndLastName()),
                             user.getEmail()
-                    );*/
+                    );
                 }));
     }
 

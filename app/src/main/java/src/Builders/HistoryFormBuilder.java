@@ -19,6 +19,10 @@ public class HistoryFormBuilder {
     public HistoryFormBuilder setNameAndLastName(TextView inputName) throws Exception {
         String name = inputName.getText().toString().trim();
 
+        if (name.length() < 3) {
+            throw new Exception("El nombre debe contener 3 carecteres como mínimo");
+        }
+
         if (!name.replace(" ", "").chars().allMatch(Character::isLetter)) {
             throw new Exception("El nombre solo puede contener letras");
         }

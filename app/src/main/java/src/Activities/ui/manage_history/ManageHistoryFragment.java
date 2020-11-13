@@ -1,17 +1,13 @@
 package src.Activities.ui.manage_history;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewManager;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -82,6 +78,10 @@ public class ManageHistoryFragment extends Fragment {
     }
 
     private void addNoResultsLabel(View root) {
-        root.findViewById(R.id.text_no_results).setVisibility(View.VISIBLE);
+        View view = root.findViewById(R.id.text_no_results);
+
+        if (view != null) {
+            view.setVisibility(View.VISIBLE);
+        }
     }
 }

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tp_cuatrimestral.R;
@@ -59,16 +58,16 @@ public class ManageHistoryAdapter extends BaseAdapter {
 
         History history = getItem(i);
 
-        ((TextView) newView.findViewById(R.id.text_name)).setText("Historial " + (i + 1));
+        ((TextView) newView.findViewById(R.id.text_name)).setText(history.getNameAndLastName());
 
-        ((ImageView) newView.findViewById(R.id.link_remove)).setOnClickListener(v -> new AlertDialog.Builder(v.getContext())
+        newView.findViewById(R.id.link_remove).setOnClickListener(v -> new AlertDialog.Builder(v.getContext())
                 .setTitle("¿Eliminar el historial?")
                 .setMessage(String.format("¿Realmente desea eliminar el historial \"%s\"?", i + 1))
                 .setPositiveButton("Aceptar", (dialog, which) -> this.manageHistoryViewModel.removeHistory(history.getId()))
                 .setNegativeButton("Cancelar", null)
                 .create().show());
 
-        ((ImageView) newView.findViewById(R.id.link_edit)).setOnClickListener(v -> {
+        newView.findViewById(R.id.link_edit).setOnClickListener(v -> {
             ManageHistoryTransporter.getFrameLayout().removeView(ManageHistoryTransporter.getCurrentContent());
 
             ManageHistoryTransporter.getFragmentManager()
@@ -79,7 +78,7 @@ public class ManageHistoryAdapter extends BaseAdapter {
             ((TextView) ManageHistoryTransporter.getRoot().findViewById(R.id.main_title)).setText(String.format("Editar historial %s", i + 1));
         });
 
-        ((ImageView) newView.findViewById(R.id.link_observation_popup)).setOnClickListener(v -> {
+        newView.findViewById(R.id.link_observation_popup).setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
             builder.setTitle(String.format("Observaciones del historial %s", i + 1));
 

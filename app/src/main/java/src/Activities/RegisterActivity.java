@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import components.Snackbar.CustomSnackbar;
-import src.Activities.ui.setup_account.UserViewModel;
 import src.Builders.UserBuilder;
 import src.Enums.StatusEnum;
 import src.Models.User;
@@ -43,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
                 new CustomSnackbar(this.contextView, "Lo sentimos, hubo un problema en el registro. Intente nuevamente.").danger();
             } else {
                 new CustomSnackbar(this.contextView, "¡El usuario ha sido registrado exitosamente!").success();
-                // this.cleanView(); // Todo: Uncomment this.
+                cleanView();
             }
 
             unblockButton();
