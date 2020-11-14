@@ -11,6 +11,7 @@ public abstract class PhonesMigration {
     public static final List<String> dataToInsert = Arrays.asList(
             "+541137925599",
             "+541145124258",
+            "5282-7500",
             "*103"
     );
 

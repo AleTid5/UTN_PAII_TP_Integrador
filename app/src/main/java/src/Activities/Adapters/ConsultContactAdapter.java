@@ -60,6 +60,7 @@ public class ConsultContactAdapter extends BaseAdapter {
         ((TextView) accordionView.findViewById(R.id.textPhone)).setText(contact.getPhones().get(0).getPhoneNumber());
         ((TextView) accordionView.findViewById(R.id.textAddress)).setText(contact.getAddress());
         ((TextView) accordionView.findViewById(R.id.textEmail)).setText(contact.getEmail());
+        ((TextView) accordionView.findViewById(R.id.textInformation)).setText(contact.getInformation());
 
         accordionView.setOnExpandCollapseListener(new AccordionExpansionCollapseListener() {
             @Override
