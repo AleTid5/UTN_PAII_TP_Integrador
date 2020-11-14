@@ -11,7 +11,7 @@ import src.Database.Tables.ContactPhonesTable;
 
 public abstract class ContactPhonesMigration {
     public static void execute(SQLiteDatabase sqLiteDatabase) {
-        IntStream.range(0, new ArrayList<>(Collections.nCopies(10, 0)).size())
+        IntStream.range(0, new ArrayList<>(Collections.nCopies(3, 0)).size())
                 .boxed().collect(Collectors.toList()).forEach(id ->
                 sqLiteDatabase.execSQL(String.format("INSERT INTO %s (%s, %s) VALUES (%s, %s)",
                         ContactPhonesTable.TABLE_NAME,

@@ -11,7 +11,6 @@ public abstract class ContactsMigration {
     private static final List<List<String>> dataToInsert = Arrays.asList(
             Arrays.asList("Duchas Santa Teresa", "Lorem Ipsum", "duchasensantateresa@gmail.com", "Islas Orcadas y Neuquén 1617, General Pacheco (Tigre)"),
             Arrays.asList("El Refugio", "Lorem Ipsum", "-", "Enciso 425, Tigre"),
-            Arrays.asList("Municipio Tigre", "probando informacion a er si entra", "refugio3@gmail.com", "Comandante Yacas 142, Tigre"),
             Arrays.asList("Secretaría de Desarrollo Social", "Lorem Ipsum", "direcciontrabajosocial@tigre.gob.ar/refugionocturno@tigre.gob.ar", "Av. Presidente Perón 567, San Fernando")
     );
 
