@@ -91,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Contacto (Mail o Teléfono)"
+            android:hint="Contacto (teléfono) *"
             android:inputType="textPersonName"
             android:textColor="#D81B60"
             android:textColorHint="#D81B60" />
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:text="Observaciones"
+            android:text="Observaciones *"
             android:textColor="#D81B60"
             android:textSize="18dp" />
 

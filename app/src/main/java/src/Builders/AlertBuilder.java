@@ -41,19 +41,21 @@ public class AlertBuilder {
     public AlertBuilder setContact(TextView inputContact) throws Exception {
         String textContact = inputContact.getText().toString().replace(" ", "");
 
-        if (textContact.length() != 0) {
-            if (textContact.length() < 8) {
-                throw new Exception("El numero telefónico debe contener como mínimo 8 caracteres");
-            }
-
-            alert.setContact(textContact);
+        if (textContact.length() < 8) {
+            throw new Exception("El numero telefónico debe contener como mínimo 8 caracteres");
         }
+
+        alert.setContact(textContact);
 
         return this;
     }
 
-    public AlertBuilder setObservations(TextView inputObservations) {
+    public AlertBuilder setObservations(TextView inputObservations) throws Exception {
         String textObservations = inputObservations.getText().toString().trim();
+
+        if (textObservations.length() < 5) {
+            throw new Exception("La observación debe contener como mínimo 5 caracteres");
+        }
 
         alert.setObservations(textObservations);
 
