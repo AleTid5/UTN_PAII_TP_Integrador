@@ -90,8 +90,6 @@ public class LoginActivity extends AppCompatActivity {
         try {
             if (UserSessionService.getUser().getId() == null) throw new Exception();
             startActivity(new Intent(this, SystemActivity.class));
-        } catch (Exception ignored) {
-            System.out.println(ignored);
-        }
+        } catch (Exception ignored) {}
     }
 }

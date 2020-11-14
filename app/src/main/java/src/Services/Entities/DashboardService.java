@@ -23,9 +23,6 @@ public abstract class DashboardService {
                         }
 
                         final Integer historyAlertsCount = t.getDocuments().size();
-
-                        System.out.println("ALEE");
-                        System.out.println(historyAlertsCount);
                         db.collection("alerts")
                                 .get()
                                 .addOnSuccessListener(t2 -> {

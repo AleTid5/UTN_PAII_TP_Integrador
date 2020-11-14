@@ -34,12 +34,9 @@ public abstract class AlertNotificationService {
 
     private static void pushNotification(JSONObject notification) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
-                response -> {
-                    System.out.println(response);
-                },
-                error -> {
-                    System.out.println(error);
-                }){
+                response -> {},
+                error -> {}
+        ){
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();

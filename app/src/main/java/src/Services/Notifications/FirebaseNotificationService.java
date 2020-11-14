@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
@@ -28,43 +29,47 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        if (!showMessage(remoteMessage.getData())) {
-            return;
+        try {
+            if (!showMessage(remoteMessage.getData())) {
+                return;
+            }
+
+            final Intent intent = new Intent(this, LoginActivity.class);
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            int notificationID = new Random().nextInt(3000);
+
+            /*
+            Apps targeting SDK 26 or above (Android O) must implement notification channels and add its notifications
+            to at least one of them. Therefore, confirm if version is Oreo or higher, then setup notification channel
+            */
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                setupChannels(notificationManager);
+            }
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
+
+            Bitmap largeIcon = BitmapFactory.decodeResource(getResources(),
+                    R.drawable.ic_chat);
+
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, ADMIN_CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_chat)
+                    .setLargeIcon(largeIcon)
+                    .setContentTitle(getTitle(remoteMessage))
+                    .setContentText(getBody(remoteMessage))
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent);
+
+            //Set notification color to match your app color template
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                notificationBuilder.setColor(getResources().getColor(R.color.colorPrimary));
+            }
+
+            notificationManager.notify(notificationID, notificationBuilder.build());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        final Intent intent = new Intent(this, LoginActivity.class);
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        int notificationID = new Random().nextInt(3000);
-
-      /*
-        Apps targeting SDK 26 or above (Android O) must implement notification channels and add its notifications
-        to at least one of them. Therefore, confirm if version is Oreo or higher, then setup notification channel
-      */
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            setupChannels(notificationManager);
-        }
-
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this , 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
-        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ic_chat);
-
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, ADMIN_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_chat)
-                .setLargeIcon(largeIcon)
-                .setContentTitle(getTitle(remoteMessage))
-                .setContentText(getBody(remoteMessage))
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent);
-
-        //Set notification color to match your app color template
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            notificationBuilder.setColor(getResources().getColor(R.color.colorPrimary));
-        }
-
-        notificationManager.notify(notificationID, notificationBuilder.build());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -104,11 +109,15 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
             return true;
         }
 
-        return !isFromBlockedUser(data.get("user_from")) && !isSameUser(data.get("user_from"));
+        if (isSameUser(data.get("user_from"))) {
+            return false;
+        }
+
+        return !isFromBlockedUser(data.get("user_from"));
     }
 
-    private Boolean isSameUser(String userId) {
-        return UserSessionService.getUser().getId() == userId;
+    private Boolean isSameUser(@NonNull String userId) {
+        return UserSessionService.getUser().getId().equals(userId);
     }
 
     private Boolean isFromBlockedUser(String userId) {
