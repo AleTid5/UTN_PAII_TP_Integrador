@@ -5,34 +5,48 @@
     android:layout_height="match_parent"
     tools:context="src.Activities.ui.alerts.AlertsFragment">
 
-    <TextView
-        android:id="@+id/link_my_alerts"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/component_header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="Mis alertas"
-        android:textColor="#D81B60"
-        app:layout_constraintBottom_toTopOf="@+id/grid_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/link_other_alerts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="Alertas de otros usuarios"
-        android:textColor="#D81B60"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/grid_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        <EditText
+            android:id="@+id/input_history_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Busque por E-Mail..."
+            android:inputType="textPersonName"
+            android:textColor="#D81B60"
+            android:textColorHint="#D81B60"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/link_my_alerts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Mis alertas"
+                android:textColor="#D81B60" />
+
+            <TextView
+                android:id="@+id/link_other_alerts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Alertas de otros usuarios"
+                android:textColor="#D81B60"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/loader"
@@ -47,15 +61,16 @@
     <GridView
         android:id="@+id/grid_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:horizontalSpacing="10dp"
         android:numColumns="1"
         android:verticalSpacing="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/component_header"
+        app:layout_constraintVertical_bias="0.0">
 
     </GridView>
 

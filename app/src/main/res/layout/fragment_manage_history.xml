@@ -5,21 +5,33 @@
     android:layout_height="match_parent"
     tools:context="src.Activities.ui.manage_history.ManageHistoryFragment">
 
-    <TextView
-        android:id="@+id/link_add_history"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@android:drawable/ic_menu_add"
-        android:drawableTint="#D81B60"
-        android:gravity="center_vertical"
-        android:text="Agregar historial"
-        android:textColor="#D81B60"
-        app:layout_constraintBottom_toTopOf="@+id/grid_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/input_history_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Busque por nombre..."
+            android:inputType="textPersonName"
+            android:textColor="#D81B60"
+            android:textColorHint="#D81B60"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/link_add_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@android:drawable/ic_menu_add"
+            android:drawableTint="#D81B60"
+            android:gravity="center_vertical"
+            android:text="Agregar historial"
+            android:textColor="#D81B60" />
+    </LinearLayout>
 
     <GridView
         android:id="@+id/grid_view"

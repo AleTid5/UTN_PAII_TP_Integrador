@@ -4,7 +4,7 @@ public enum StatusEnum {
     NO_ACTION,
     DUPLICATED_EMAIL,
     DUPLICATED_DNI,
-    FETCHED_ITEM,
+    INVALID_DNI,
     TRANSACTION_OK,
     TRANSACTION_FAILED
 }

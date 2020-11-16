@@ -56,17 +56,15 @@ public class BlockedUsersFragment extends Fragment {
             }
         });
 
-        ((Button) root.findViewById(R.id.button_unblock)).setOnClickListener(view -> {
-            new AlertDialog.Builder(view.getContext())
-                    .setTitle("¿Desbloquear alertas?")
-                    .setMessage("¿Desea desbloquear a los usuarios seleccionados?")
-                    .setPositiveButton("Aceptar", (dialog, which) -> {
-                        blockedUsersViewModel.unblockUsers();
-                        new CustomSnackbar(view, "¡Usuarios desbloqueados!");
-                    })
-                    .setNegativeButton("Cancelar", null)
-                    .create().show();
-        });
+        ((Button) root.findViewById(R.id.button_unblock)).setOnClickListener(view -> new AlertDialog.Builder(view.getContext())
+                .setTitle("¿Desbloquear alertas?")
+                .setMessage("¿Desea desbloquear a los usuarios seleccionados?")
+                .setPositiveButton("Aceptar", (dialog, which) -> {
+                    blockedUsersViewModel.unblockUsers();
+                    new CustomSnackbar(view, "¡Usuarios desbloqueados!");
+                })
+                .setNegativeButton("Cancelar", null)
+                .create().show());
 
         ((TextView) root.findViewById(R.id.link_go_back)).setOnClickListener(view -> SystemActivity.performClick(R.id.nav_setup_account));
 

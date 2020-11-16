@@ -15,15 +15,21 @@ import src.Services.Entities.AlertService;
 public class HistoryAlertsViewModel extends ViewModel {
     private static MutableLiveData<List<Alert>> liveAlertList = new MutableLiveData<>();
     private static MutableLiveData<Boolean> liveShowOwnAlerts = new MutableLiveData<>(true);
+    private static MutableLiveData<List<Alert>> liveFilteredAlertList = new MutableLiveData<>();
 
     public HistoryAlertsViewModel() {
         liveShowOwnAlerts.setValue(false);
         liveAlertList.setValue(new ArrayList<>());
+        liveFilteredAlertList.setValue(new ArrayList<>());
         AlertService.fetchAlertList();
     }
 
     public LiveData<List<Alert>> getAlertList() {
         return liveAlertList;
+    }
+
+    public LiveData<List<Alert>> getFilteredAlertList() {
+        return liveFilteredAlertList;
     }
 
     public void toggleOwnerVisibilityAlerts(Boolean value) {
@@ -50,5 +56,22 @@ public class HistoryAlertsViewModel extends ViewModel {
                 .filter(alert -> !alert.getUser().getId().equals(userId))
                 .collect(Collectors.toList());
         liveAlertList.postValue(alertList);
+    }
+
+    public void filterByName(String filterEmail) {
+        try {
+            if (liveAlertList.getValue().isEmpty()) return;
+
+            if (filterEmail.isEmpty()) {
+                liveFilteredAlertList.postValue(liveAlertList.getValue());
+                return;
+            }
+
+            List<Alert> historyList = Objects.requireNonNull(liveAlertList.getValue())
+                    .stream()
+                    .filter(p -> p.getUser().getEmail().toLowerCase().contains(filterEmail.toLowerCase()))
+                    .collect(Collectors.toList());
+            liveFilteredAlertList.postValue(historyList);
+        } catch (Exception ignored) {}
     }
 }

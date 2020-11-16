@@ -72,13 +72,15 @@ public class HistoryFormBuilder {
         return this;
     }
 
-    public HistoryFormBuilder setObservations(TextView inputObservations) {
+    public HistoryFormBuilder setObservations(TextView inputObservations) throws Exception {
         String textObservations = inputObservations.getText().toString().trim();
 
-        if (textObservations.length() != 0) {
-            history.setObservations(textObservations);
-            reportIndexControl++;
+        if (textObservations.length() < 5) {
+            throw new Exception("La observación debe contener 5 caracteres como mínimo");
         }
+
+        history.setObservations(textObservations);
+        reportIndexControl++;
 
         return this;
     }

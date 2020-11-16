@@ -27,12 +27,12 @@ public class BlockedUsersViewModel extends ViewModel {
     }
 
     public void unblockUsers() {
-        List<User> productList = Objects.requireNonNull(liveUserList.getValue());
         List<String> blockedUsers = BlockedUserAdapter.getSelectedUsers();
+        List<User> userList = Objects.requireNonNull(liveUserList.getValue()).stream()
+                .filter(user -> !blockedUsers.contains(user.getId()))
+                .collect(Collectors.toList());
 
-        blockedUsers.forEach(userId -> liveUserList.postValue(productList.stream()
-                .filter(user -> !user.getId().equals(userId))
-                .collect(Collectors.toList())));
+        liveUserList.postValue(userList);
 
         AlertService.unblockUser(BlockedUserAdapter.getSelectedUsers());
         BlockedUserAdapter.cleanSelectedUsers();

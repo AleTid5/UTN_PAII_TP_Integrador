@@ -15,9 +15,11 @@ import src.Services.Entities.HistoryService;
 public class ManageHistoryViewModel extends ViewModel {
 
     private static MutableLiveData<List<History>> liveHistoryList = new MutableLiveData<>();
+    private static MutableLiveData<List<History>> liveFilteredHistoryList = new MutableLiveData<>();
 
     public ManageHistoryViewModel() {
         liveHistoryList.setValue(new ArrayList<>());
+        liveFilteredHistoryList.setValue(new ArrayList<>());
         HistoryService.fetchHistoryList();
     }
 
@@ -25,13 +27,17 @@ public class ManageHistoryViewModel extends ViewModel {
         return liveHistoryList;
     }
 
+    public LiveData<List<History>> getFilteredHistoryList() {
+        return liveFilteredHistoryList;
+    }
+
     public void removeHistory(String historyId) {
         HistoryService.remove(historyId);
-        List<History> productList = Objects.requireNonNull(liveHistoryList.getValue())
+        List<History> historyList = Objects.requireNonNull(liveHistoryList.getValue())
                 .stream()
                 .filter(p -> !p.getId().equals(historyId))
                 .collect(Collectors.toList());
-        liveHistoryList.postValue(productList);
+        liveHistoryList.postValue(historyList);
     }
 
     public static void addHistoryReport(History history) {
@@ -57,5 +63,22 @@ public class ManageHistoryViewModel extends ViewModel {
         int productIndex = historyList.stream().map(History::getId).collect(Collectors.toList()).indexOf(history.getId());
         historyList.set(productIndex, history);
         liveHistoryList.postValue(liveHistoryList.getValue());
+    }
+
+    public void filterByName(String filterName) {
+        try {
+            if (liveHistoryList.getValue().isEmpty()) return;
+
+            if (filterName.isEmpty()) {
+                liveFilteredHistoryList.postValue(liveHistoryList.getValue());
+                return;
+            }
+
+            List<History> historyList = Objects.requireNonNull(liveHistoryList.getValue())
+                    .stream()
+                    .filter(p -> p.getNameAndLastName().toLowerCase().contains(filterName.toLowerCase()))
+                    .collect(Collectors.toList());
+            liveFilteredHistoryList.postValue(historyList);
+        } catch (Exception ignored) {}
     }
 }

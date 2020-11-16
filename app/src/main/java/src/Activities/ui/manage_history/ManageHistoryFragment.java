@@ -2,10 +2,13 @@ package src.Activities.ui.manage_history;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -51,6 +54,13 @@ public class ManageHistoryFragment extends Fragment {
             }
         });
 
+        manageHistoryViewModel.getFilteredHistoryList().observe(getViewLifecycleOwner(), stepList -> {
+            GridView gridView = requireView().findViewById(R.id.grid_view);
+            if (gridView != null) {
+                gridView.setAdapter(new ManageHistoryAdapter(stepList, manageHistoryViewModel));
+            }
+        });
+
         content.findViewById(R.id.link_add_history).setOnClickListener(view -> {
             mainContent.removeView(content);
 
@@ -61,6 +71,8 @@ public class ManageHistoryFragment extends Fragment {
 
             ((TextView) root.findViewById(R.id.main_title)).setText("Agregar historial");
         });
+
+        ((EditText) content.findViewById(R.id.input_history_filter)).addTextChangedListener(filterList(manageHistoryViewModel));
 
         return root;
     }
@@ -83,5 +95,20 @@ public class ManageHistoryFragment extends Fragment {
         if (view != null) {
             view.setVisibility(View.VISIBLE);
         }
+    }
+
+    private TextWatcher filterList(ManageHistoryViewModel manageHistoryViewModel) {
+        return new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                manageHistoryViewModel.filterByName(s.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        };
     }
 }

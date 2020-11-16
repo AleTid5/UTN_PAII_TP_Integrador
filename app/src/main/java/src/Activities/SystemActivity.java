@@ -15,10 +15,10 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.tp_cuatrimestral.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import components.MovableFloatingActionButton.MovableFloatingActionButton;
 import src.Services.Entities.UserSessionService;
 
 public class SystemActivity extends AppCompatActivity {
@@ -34,7 +34,7 @@ public class SystemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_system);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        MovableFloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> performClick(R.id.nav_alerts));
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);

@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.tp_cuatrimestral.R;
 
 import components.Snackbar.CustomSnackbar;
-import src.Activities.ui.setup_account.UserViewModel;
+import src.Enums.StatusEnum;
 import src.Services.Entities.PasswordRecoveryService;
 import src.Validators.NumberValidator;
 
@@ -25,12 +25,12 @@ public class RecoveryPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recovery_password);
 
-        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        StatusViewModel statusViewModel = new ViewModelProvider(this).get(StatusViewModel.class);
 
-        userViewModel.getLiveUser().observe(this, user -> {
-            if (this.contextView == null) return;
+        statusViewModel.getLiveStatus().observe(this, status -> {
+            if (this.contextView == null || status == null || StatusEnum.NO_ACTION.equals(status)) return;
 
-            if (user == null) {
+            if (StatusEnum.INVALID_DNI.equals(status)) {
                 new CustomSnackbar(this.contextView, "El DNI ingresado no pertenece a ninguna cuenta").danger();
             } else {
                 new CustomSnackbar(this.contextView, "Revise su casilla de correos, le hemos enviado su contraseña").success();
@@ -46,8 +46,9 @@ public class RecoveryPasswordActivity extends AppCompatActivity {
 
     public void onRecoveryPassword(View view) {
         try {
-            String textDNI = ((TextView)this.findViewById(R.id.input_dni)).getText().toString().trim();
+            String textDNI = ((TextView) this.findViewById(R.id.input_dni)).getText().toString().trim();
             Integer DNI = NumberValidator.validateDNI(textDNI);
+
             blockButton();
             this.contextView = view;
             PasswordRecoveryService.recoverPassword(DNI);

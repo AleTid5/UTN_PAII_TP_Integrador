@@ -1,5 +1,5 @@
 # App GSC
-![Android](https://res-3.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/qltkjzdqthkeali25e6q)
+![Android](https://img.shields.io/badge/-Android-404040?logo=android&style=for-the-badge)
 
 # 🤔 What is this?
 This is an App made for every citizen interested in helping people in street situation. In many countries, there is a person or a group of persons living in street, and we can help them with a glass of water or a warm food dish.

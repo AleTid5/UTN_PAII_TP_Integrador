@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.Executors;
 
 import src.Activities.StatusViewModel;
 import src.Activities.ui.blocked_users.BlockedUsersViewModel;
@@ -18,7 +19,6 @@ import src.Validators.PasswordValidator;
 
 public abstract class UserService {
     public static void fetchBlockedUserList() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         List<String> blockedUsers = UserSessionService.getUser().getBlockedUsers();
 
         if (blockedUsers.isEmpty()) {
@@ -26,12 +26,14 @@ public abstract class UserService {
             return;
         }
 
-        db.collection("users")
+        Executors.newFixedThreadPool(1).submit(() -> FirebaseFirestore
+                .getInstance()
+                .collection("users")
                 .whereIn(FieldPath.documentId(), blockedUsers)
                 .get()
                 .addOnCompleteListener(task -> {
                     try {
-                        if (!task.isSuccessful()) throw new Exception();
+                        if (!task.isSuccessful()) throw task.getException();
 
                         List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
 
@@ -44,47 +46,43 @@ public abstract class UserService {
                             BlockedUsersViewModel.onAddBlockedUser(new User().unwrap(map));
                         });
 
-                    } catch (Exception e) {}
-                });
+                    } catch (Exception ignored) {}
+                }));
     }
 
-    public static void authenticateUser (String email, String password) throws Exception
-    {
-        try {
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection(("users"))
-                    .whereEqualTo("email", email)
-                    .whereEqualTo("password", PasswordValidator.encrypt(password))
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
+    public static void authenticateUser (String email, String password) {
+        Executors.newFixedThreadPool(1).submit(() -> FirebaseFirestore
+                .getInstance().collection(("users"))
+                .whereEqualTo("email", email)
+                .whereEqualTo("password", PasswordValidator.encrypt(password))
+                .get()
+                .addOnCompleteListener(task -> {
+                    try {
+                        if (!task.isSuccessful()) throw task.getException();
 
-                            if (!documentSnapshots.isEmpty()) {
-                                Map<String,Object> map = documentSnapshots.get(0).getData();
-                                assert map != null;
-                                map.put("id", documentSnapshots.get(0).getId());
+                        List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
 
-                                User user = new User().unwrap(map);
+                        if (documentSnapshots.isEmpty()) throw new Exception();
 
-                                fillUserData(user);
-                                UserViewModel.onUserChange(user);
-                            } else {
-                                UserViewModel.onUserChange(null);
-                            }
-                        } else {
-                            UserViewModel.onUserChange(null);
-                        }
-                    });
-        } catch (Exception ex){
-            throw new Exception("Usuario y/o contraseña incorrectos");
-        }
+                        Map<String,Object> map = documentSnapshots.get(0).getData();
+                        assert map != null;
+                        map.put("id", documentSnapshots.get(0).getId());
+
+                        User user = new User().unwrap(map);
+
+                        fillUserData(user);
+                        UserViewModel.onUserChange(user);
+                    } catch (Exception e) {
+                        UserViewModel.onUserChange(null);
+                    }
+                }));
     }
 
     public static void registerUser(User user) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        checkUserEmailAndDNIThenExecute(db, user, () -> db.collection("users")
+        checkUserEmailAndDNIThenExecute(db, user, () -> db
+                .collection("users")
                 .add(user.wrap())
                 .addOnFailureListener(t -> StatusViewModel.onStatusChange(StatusEnum.TRANSACTION_FAILED))
                 .addOnSuccessListener(t -> {
@@ -118,12 +116,13 @@ public abstract class UserService {
      * @param user
      */
     private static void checkUserEmailAndDNIThenExecute(FirebaseFirestore db, final User user, Runnable runnable) {
-        db.collection("users")
+        Executors.newFixedThreadPool(1).submit(() -> db
+                .collection("users")
                 .whereEqualTo("email", user.getEmail())
                 .get()
                 .addOnCompleteListener(task -> {
                     try {
-                        if (!task.isSuccessful()) throw new Exception();
+                        if (!task.isSuccessful()) throw task.getException();
 
                         List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
 
@@ -148,7 +147,7 @@ public abstract class UserService {
                     } catch (Exception e) {
                         StatusViewModel.onStatusChange(StatusEnum.DUPLICATED_EMAIL);
                     }
-                });
+                }));
     }
 
     /**
@@ -157,12 +156,13 @@ public abstract class UserService {
      * @param user
      */
     private static void checkUserEmailThenUpdate(FirebaseFirestore db, User user) {
-        db.collection("users")
+        Executors.newFixedThreadPool(1).submit(() -> db
+                .collection("users")
                 .whereEqualTo("email", user.getEmail())
                 .get()
                 .addOnCompleteListener(task -> {
                     try {
-                        if (!task.isSuccessful()) throw new Exception();
+                        if (!task.isSuccessful()) throw task.getException();
 
                         List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
 
@@ -172,7 +172,7 @@ public abstract class UserService {
                     } catch (Exception e) {
                         StatusViewModel.onStatusChange(StatusEnum.DUPLICATED_EMAIL);
                     }
-                });
+                }));
     }
 
     /**
@@ -181,12 +181,13 @@ public abstract class UserService {
      * @param user
      */
     private static void checkUserDNIThenUpdate(FirebaseFirestore db, User user) {
-        db.collection("users")
+        Executors.newFixedThreadPool(1).submit(() -> db
+                .collection("users")
                 .whereEqualTo("dni", user.getDNI())
                 .get()
                 .addOnCompleteListener(task -> {
                     try {
-                        if (!task.isSuccessful()) throw new Exception();
+                        if (!task.isSuccessful()) throw task.getException();
 
                         List<DocumentSnapshot> documentSnapshots = Objects.requireNonNull(task.getResult()).getDocuments();
 
@@ -196,7 +197,7 @@ public abstract class UserService {
                     } catch (Exception e) {
                         StatusViewModel.onStatusChange(StatusEnum.DUPLICATED_DNI);
                     }
-                });
+                }));
     }
 
     private static void onUpdate(FirebaseFirestore db, User user) {
@@ -211,16 +212,18 @@ public abstract class UserService {
     }
 
     private static void fillUserData(User user) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(("user_blocked_alerts"))
+        FirebaseFirestore
+                .getInstance()
+                .collection(("user_blocked_alerts"))
                 .whereEqualTo("user_from", user.getId())
                 .get()
                 .addOnCompleteListener(task -> {
                     try {
-                        if (!task.isSuccessful()) throw new Exception();
+                        if (!task.isSuccessful()) throw task.getException();
 
-                        task.getResult().getDocuments().forEach(documentSnapshot ->
-                                user.addBlockedUser((String) documentSnapshot.getData().get("user_to")));
+                        Objects.requireNonNull(task.getResult()).getDocuments().forEach(documentSnapshot ->
+                                user.addBlockedUser((String) Objects.requireNonNull(documentSnapshot.getData()).get("user_to"))
+                        );
                     } catch (Exception ignored) {
                     } finally {
                         UserSessionService.setUser(user);
