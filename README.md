@@ -2,7 +2,7 @@
 ![Android](https://img.shields.io/badge/-Android-404040?logo=android&style=for-the-badge)
 
 # 🤔 What is this?
-This is an App made for every citizen interested in helping people in street situation. In many countries, there is a person or a group of persons living in street, and we can help them with a glass of water or a warm food dish.
+This is an App made for every citizen interested in helping homeless people. In many countries, there is a person or a group of persons living on the street, and we can help them with a glass of water or a warm food dish.
 
 # 🔮 App Main Functions
 - Consult contacts (Get a list of the near centers to call)
